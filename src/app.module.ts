@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { CampoModule } from './campo/campo.module';
 import { AplicacionModule } from './aplicacion/aplicacion.module';
 import { ProductosAplicacionModule } from './productos-aplicacion/productos-aplicacion.module';
+import { ProductoModule } from './producto/producto.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ProductosAplicacionModule } from './productos-aplicacion/productos-apli
     TypeOrmModule.forRoot(),
     AplicacionModule,
     ProductosAplicacionModule,
+    ProductoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
