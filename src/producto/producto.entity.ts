@@ -1,0 +1,26 @@
+import { Entity, PrimaryColumn, Column} from 'typeorm';
+
+@Entity('e01_producto')
+export class Producto {
+    @PrimaryColumn()
+    idProducto: number;
+
+    @Column()
+    private nombre: string;
+
+    public constructor(productoId:number, nombre:string){
+        this.idProducto = productoId;
+        this.nombre = nombre;
+    }
+
+    public getIdProducto():number{
+        return this.idProducto;
+    }
+
+    public getNombre():string{
+        return this.nombre;
+    }
+
+    public setIdProducto(idProducto:number): void { this.idProducto = idProducto; }
+    public setNombre(nombre:string): void { this.nombre = nombre; }
+}
