@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from 'proyectogrupoa/node_modules/@nestjs/typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductosAplicacionController } from './productos-aplicacion.controller';
 import { ProductosAplicacionService } from './productos-aplicacion.service';
 import { Productos_Aplicacion } from './productos_aplicacion.entity';

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from 'proyectogrupoa/node_modules/@nestjs/typeorm';
-import { Repository } from 'proyectogrupoa/node_modules/typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { AplicacionDTO } from './aplicacion.dto';
 import { Aplicacion } from './aplicacion.entity';
 import { AplicacionDTO_conId } from './aplicacion_conId.dto';
