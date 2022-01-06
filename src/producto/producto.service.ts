@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductoDTO } from './producto.dto';
 import { Producto } from './producto.entity';
+import { ProductoDTO_conId } from './producto_conId.dto';
 
 @Injectable()
 export class ProductoService {
@@ -45,18 +46,18 @@ export class ProductoService {
         }
     }
 
-    public async updProducto(producto: ProductoDTO): Promise<Producto[]> { 
+    public async updProducto(producto: ProductoDTO_conId): Promise<Producto[]> { 
         try { 
-            const updProd: Producto = await this.productoRepository.findOne(producto.nombre);
+            const updProd: Producto = await this.productoRepository.findOne(producto.idProducto);
             if (!updProd) { 
-                throw new HttpException( { error : `Error buscando el producto de Id: ${producto.nombre}`}, HttpStatus.NOT_FOUND);
+                throw new HttpException( { error : `Error buscando el producto de Id: ${producto.idProducto}`}, HttpStatus.NOT_FOUND);
             } 
             await this.productoRepository.save(updProd); 
             const productos: Producto[] = await this.productoRepository.find() 
             return productos; 
 
         } catch (error) { 
-            throw new HttpException({ error : `Error modificando el producto de Id: ${producto.nombre}`}, HttpStatus.NOT_FOUND)
+            throw new HttpException({ error : `Error modificando el producto de Id: ${producto.idProducto}`}, HttpStatus.NOT_FOUND)
         }
     }
 
@@ -73,7 +74,6 @@ export class ProductoService {
             throw new HttpException( { error : `Error eliminando el producto de Id: ${id}`}, HttpStatus.NOT_FOUND);
         }
     }
-
 
     private async generarId() {
         try {
