@@ -12,8 +12,8 @@ export class ProductosAplicacionService {
     //Consultar
     public async getProdAplicaciones(): Promise<Productos_Aplicacion[]>{
         try {
-            const prod_aplicaciones: Productos_Aplicacion[] = await this.productos_aplicacionRepository.find()
-            console.log(prod_aplicaciones)
+            const prod_aplicaciones: Productos_Aplicacion[] = await this.productos_aplicacionRepository.find({relations:["producto"]});
+            console.log(prod_aplicaciones);
             return prod_aplicaciones;           
         } catch (error) { 
             throw new HttpException( { error : `Error al buscar productos_aplicaciones: ${error}`}, HttpStatus.NOT_FOUND);
@@ -22,8 +22,8 @@ export class ProductosAplicacionService {
 
     public async getProdAplicacion(id: number): Promise<Productos_Aplicacion>{
     try {
-            const prod_aplicacion: Productos_Aplicacion = await this.productos_aplicacionRepository.findOne(id)
-            console.log(prod_aplicacion)
+            const prod_aplicacion: Productos_Aplicacion = await this.productos_aplicacionRepository.findOne(id, {relations: ["producto"]});
+            console.log(prod_aplicacion);
             return prod_aplicacion;           
         } catch (error) {
             throw new HttpException( { error : `Error al buscar productos_aplicacion: ${error}`}, HttpStatus.NOT_FOUND);
