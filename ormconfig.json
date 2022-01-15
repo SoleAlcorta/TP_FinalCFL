@@ -3,10 +3,10 @@
     "host": "localhost",
     "port": 3306,
     "username": "root",
-    "password": "37621721",
-    "database": "proyecto_grupo_a",
+    "password":
+    "database":
     "entities": [
       "dist/**/**.entity{.ts,.js}"
     ],
     "synchronize": false
-   }
+ }
