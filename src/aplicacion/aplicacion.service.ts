@@ -1,20 +1,26 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Lote } from 'src/lote/lote.entity';
+import { Productos_Aplicacion } from 'src/productos-aplicacion/productos_aplicacion.entity';
 import { Repository } from 'typeorm';
 import { AplicacionDTO } from './aplicacion.dto';
 import { Aplicacion } from './aplicacion.entity';
-import { AplicacionDTO_conId } from './aplicacion_conId.dto';
+// import { AplicacionDTO_conId } from './aplicacion_conId.dto';
 
 
 @Injectable()
 export class AplicacionService {
 
-    constructor (@InjectRepository(Aplicacion) private readonly aplicacionRepository : Repository<Aplicacion>) {}
+    constructor (
+        @InjectRepository(Aplicacion) private readonly aplicacionRepository : Repository<Aplicacion>,
+        @InjectRepository(Productos_Aplicacion) private readonly productos_aplicacionRepository : Repository<Productos_Aplicacion>,
+        @InjectRepository(Lote) private readonly loteRepository : Repository<Lote>
+        ) {}
 
-    //Consultar
+    //Consultar. Acá necesito que me traiga los detalles de la aplicacion (productos-aplicacion) y los lotes en los que se hizo
     public async getAplicaciones(): Promise<Aplicacion[]>{
         try {
-            const aplicaciones: Aplicacion[] = await this.aplicacionRepository.find()
+            const aplicaciones: Aplicacion[] = await this.aplicacionRepository.find( {relations: ['detallesProductosAplicados', 'lote']} )
             console.log(aplicaciones)
             return aplicaciones;           
         } catch (error) { 
@@ -24,7 +30,7 @@ export class AplicacionService {
 
     public async getAplicacion(id: number): Promise<Aplicacion>{
     try {
-            const aplicacion: Aplicacion = await this.aplicacionRepository.findOne(id)
+            const aplicacion: Aplicacion = await this.aplicacionRepository.findOne(id, {relations: ['detallesProductosAplicados', 'lote']} )
             console.log(aplicacion)
             return aplicacion;           
         } catch (error) {
@@ -49,23 +55,37 @@ export class AplicacionService {
         }
     }
     // Actualizar
-    public async updAplicacion(aplicacion: AplicacionDTO_conId): Promise<Aplicacion[]> { 
-        try { 
-            const aplicacionCambia: Aplicacion = await this.aplicacionRepository.findOne(aplicacion.idAplicacion);
-            if (!aplicacionCambia) { 
-                throw new HttpException( { error : `Error al buscar la aplicacion con Id: ${aplicacion.idAplicacion}`}, HttpStatus.NOT_FOUND);
-            } 
-            aplicacionCambia.setFechaAplicacion(aplicacion.fechaAplicacion);
-            aplicacionCambia.setLoteAplicacion(aplicacion.loteAplicacion);
-            aplicacionCambia.setCampoAplicacion(aplicacion.campoAplicacion);
-            await this.aplicacionRepository.save(aplicacionCambia); 
-            const aplicaciones: Aplicacion[] = await this.aplicacionRepository.find() 
-            return aplicaciones; 
+    // public async updAplicacion(aplicacion: AplicacionDTO_conId): Promise<Aplicacion[]> { 
+    //     try { 
+    //         const aplicacionCambia: Aplicacion = await this.aplicacionRepository.findOne(aplicacion.idAplicacion);
+    //         if (!aplicacionCambia) { 
+    //             throw new HttpException( { error : `Error al buscar la aplicacion con Id: ${aplicacion.idAplicacion}`}, HttpStatus.NOT_FOUND);
+    //         } 
+    //         aplicacionCambia.setFechaAplicacion(aplicacion.fechaAplicacion);
+    //         aplicacionCambia.setLoteAplicacion(aplicacion.loteAplicacion);
+    //         aplicacionCambia.setCampoAplicacion(aplicacion.campoAplicacion);
+    //         await this.aplicacionRepository.save(aplicacionCambia); 
+    //         const aplicaciones: Aplicacion[] = await this.aplicacionRepository.find() 
+    //         return aplicaciones; 
 
-        } catch (error) { 
-            throw new HttpException({ error : `Error modificando la aplicacion con Id: ${aplicacion.idAplicacion}`}, HttpStatus.NOT_FOUND)
+    //     } catch (error) { 
+    //         throw new HttpException({ error : `Error modificando la aplicacion con Id: ${aplicacion.idAplicacion}`}, HttpStatus.NOT_FOUND)
+    //     }
+    // }
+
+    public async updAplicacion(id: number, aplicacionDTO: AplicacionDTO): Promise<string> {
+        const aplicacionCambia: Aplicacion = await this.aplicacionRepository.findOne(id);
+        if (!aplicacionCambia){
+            throw new HttpException('La aplicacion no existe', 404);
+        } else {
+            aplicacionCambia.setFechaAplicacion(aplicacionDTO.fechaAplicacion);
+            // aplicacionCambia.setLoteAplicacion(aplicacion.loteAplicacion);
+            // aplicacionCambia.setCampoAplicacion(aplicacion.campoAplicacion);
+            await this.aplicacionRepository.save(aplicacionCambia);
+            return "Aplicacion modificada.";
         }
     }
+
     // Eliminar
     public async delAplicacion(id: number) : Promise<Aplicacion[]> { 
         try {

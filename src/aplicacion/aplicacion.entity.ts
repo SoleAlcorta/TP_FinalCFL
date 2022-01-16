@@ -1,4 +1,6 @@
-import { Entity, PrimaryColumn, Column} from 'typeorm';
+import { Lote } from 'src/lote/lote.entity';
+import { Productos_Aplicacion } from 'src/productos-aplicacion/productos_aplicacion.entity';
+import { Entity, PrimaryColumn, Column, OneToMany, OneToOne, ManyToOne, JoinColumn} from 'typeorm';
 
 
 @Entity('e01_aplicacion')
@@ -9,28 +11,40 @@ export class Aplicacion {
     @Column()
     private fechaAplicacion: string;
 
-    @Column()
-    private loteAplicacion: number;
+    // @PrimaryColumn() //FK
+    // private loteAplicacion: number; 
 
-    @Column()
-    private campoAplicacion: number;
+    // @PrimaryColumn() //FK
+    // private campoAplicacion: number; 
 
+    //Relacion con la tabla de detalles de aplicacion
+    @OneToMany(type => Productos_Aplicacion, detalleAplicados => detalleAplicados.aplicacion)
+    public detallesProductosAplicados: Productos_Aplicacion[]
 
-    public constructor(aplicacionId:number, aplicacionFecha:string, aplicacionLote:number, aplicacionCampo: number){
+    //Relacion con la tabla lote. OJO un lote puede tener muchas aplicaciones (en diferentes fechas)
+    @ManyToOne (type => Lote, lote => lote.aplicaciones)
+    @JoinColumn ({ name: 'idLote'})
+    public lote: Lote;
+    //Relacion con variable idCampo de la tabla lote?
+    @ManyToOne (type => Lote, loteCampo => lote.campoAplicaciones)
+    @JoinColumn ({ name: 'idCampo'})
+    public loteCampo: Lote;
+
+    public constructor(aplicacionId:number, aplicacionFecha:string, aplicacionLote: Lote, aplicacionCampo: Lote){
         this.idAplicacion = aplicacionId;
         this.fechaAplicacion = aplicacionFecha;
-        this.loteAplicacion = aplicacionLote;
-        this.campoAplicacion = aplicacionCampo;
+        this.lote = aplicacionLote;
+        this.loteCampo = aplicacionCampo;
     }
 
     public getIdAplicacion():number{ return this.idAplicacion; }
     public getFechaAplicacion():string{ return this.fechaAplicacion; }
-    public getLoteAplicacion():number{ return this.loteAplicacion; }
-    public getCampoAplicacion():number{ return this.campoAplicacion; }
+    // public getLoteAplicacion():number{ return this.loteAplicacion; }
+    // public getCampoAplicacion():number{ return this.campoAplicacion; }
 
     public setIdAplicacion(idAplicacion:number): void { this.idAplicacion = idAplicacion; }
     public setFechaAplicacion(fechaAplicacion: string): void{ this.fechaAplicacion = fechaAplicacion; }
-    public setLoteAplicacion(loteAplicacion:number): void{ this.loteAplicacion = loteAplicacion; }
-    public setCampoAplicacion(campoAplicacion:number): void{ this.campoAplicacion = campoAplicacion; }
+    // public setLoteAplicacion(loteAplicacion:number): void{ this.loteAplicacion = loteAplicacion; }
+    // public setCampoAplicacion(campoAplicacion:number): void{ this.campoAplicacion = campoAplicacion; }
 
 }
