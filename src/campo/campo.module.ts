@@ -11,4 +11,4 @@ import { CampoService } from './campo.service';
   controllers: [CampoController],
   providers: [CampoService]
 })
-export class CampoModule {}
+export class CampoModule {} 

@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { AplicacionDTO } from './aplicacion.dto';
 import { Aplicacion } from './aplicacion.entity';
 import { AplicacionService } from './aplicacion.service';
-import { AplicacionDTO_conId } from './aplicacion_conId.dto';
+// import { AplicacionDTO_conId } from './aplicacion_conId.dto';
 
 @Controller('aplicacion') 
 export class AplicacionController {
@@ -20,10 +20,15 @@ export class AplicacionController {
     createAplicacion(@Body() aplicacionDto: AplicacionDTO): Promise<Aplicacion[]> {
     return this.aplicacionService.addAplicacion(aplicacionDto);
     }
+    // @Put(':id')
+    // public async updAplicacion(@Body() aplicacion_conIdDTO: AplicacionDTO_conId): Promise<Aplicacion[]> { 
+    //     return await this.aplicacionService.updAplicacion(aplicacion_conIdDTO);  
+    // }
     @Put(':id')
-    public async updAplicacion(@Body() aplicacion_conIdDTO: AplicacionDTO_conId): Promise<Aplicacion[]> { 
-        return await this.aplicacionService.updAplicacion(aplicacion_conIdDTO);  
+    public async updAplicacion(@Param('id') id:number,@Body() aplicacionDTO: AplicacionDTO): Promise<string> {
+     return this.aplicacionService.updAplicacion(id,aplicacionDTO);
     }
+
     @Delete(':id')  
     public delAplicacion(@Param('id') id: string): Promise<Aplicacion[]> {
         return this.aplicacionService.delAplicacion(parseInt(id));
