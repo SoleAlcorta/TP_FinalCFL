@@ -6,10 +6,13 @@ import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn} from 'typeorm';
 @Entity('e01_productos_aplicacion')
 export class Productos_Aplicacion {
     @PrimaryColumn()
-    nroAplicacion: number;
+    idAplicacion: number;
 
-    @PrimaryColumn()
-    idProducto: number;
+    @PrimaryColumn ()
+    nroAplicacion: number
+
+    @PrimaryColumn ()
+    idProducto: number
 
     @Column()
     private dosis: string;
@@ -18,17 +21,17 @@ export class Productos_Aplicacion {
     @JoinColumn({ name: 'idAplicacion' })
     public aplicacion: Aplicacion;
 
-    @ManyToOne((type) => Producto, (producto) => producto.productos)
+    @ManyToOne((type) => Producto, producto => producto.aplicaciones)
     @JoinColumn({ name: 'idProducto' })
-    public productos: Producto;
+    public producto: Producto;
 
-    public constructor(aplicacionNro:number, productoId:number, dosis: string, productos? :Producto, aplicacion?: Aplicacion){
-        this.nroAplicacion = aplicacionNro;
-        this.idProducto = productoId;
+    public constructor(idAplicacion: number, aplicacionNro: number, idProducto: number, dosis: string){
+        this.idAplicacion = aplicacionNro;
+        this.nroAplicacion = idAplicacion; 
+        this.idProducto = idProducto;
         this.dosis = dosis;
-        this.productos = productos;
-        this.aplicacion = aplicacion; 
-    }
+ 
+    }       
 
     public getNroAplicacion():number{ return this.nroAplicacion; }
     // public getIdAplicacion():number{ return this.idAplicacion; }
