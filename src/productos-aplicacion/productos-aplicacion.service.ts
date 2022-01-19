@@ -1,5 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Aplicacion } from 'src/aplicacion/aplicacion.entity';
+import { Producto } from 'src/producto/producto.entity';
 import { Repository } from 'typeorm';
 import { Productos_AplicacionDTO } from './productos_aplicacion.dto';
 import { Productos_Aplicacion } from './productos_aplicacion.entity';
@@ -7,8 +9,11 @@ import { Productos_AplicacionDTO_conId } from './productos_aplicacion_conId.dto'
 
 @Injectable()
 export class ProductosAplicacionService {
-    constructor (@InjectRepository(Productos_Aplicacion) private readonly productos_aplicacionRepository : Repository<Productos_Aplicacion>) {}
-
+    constructor 
+    (@InjectRepository(Productos_Aplicacion) private readonly productos_aplicacionRepository : Repository<Productos_Aplicacion>,
+    @InjectRepository(Producto) private readonly prodoductoRepository : Repository <Producto>,
+    @InjectRepository (Aplicacion) private readonly aplicacionRepository : Repository <Aplicacion>
+    ) {}
     //Consultar
     public async getProdAplicaciones(): Promise<Productos_Aplicacion[]>{
         try {
@@ -31,14 +36,24 @@ export class ProductosAplicacionService {
     }
 
     //Agregar  OJO. ¿EXISTE ALGUNA MANERA DE AGREGAR MÁS PRODUCTOS Y MÁS DOSIS EN LA APLICACIÓN?
-    public async addProdAplicacion(newProdAplicacion: Productos_AplicacionDTO): Promise<Productos_Aplicacion[]> {
+    public async addProdAplicacion(newProdAplicacion: Productos_AplicacionDTO): Promise <Productos_Aplicacion> {
         try {
-            let nroAplicacion: number = await this.generarId();
-            let prod_aplicacionCreada = new Productos_Aplicacion(nroAplicacion, newProdAplicacion.idAplicacion, newProdAplicacion.idProducto, newProdAplicacion.dosis)
-            await this.productos_aplicacionRepository.save(prod_aplicacionCreada);
-            const prod_aplicaciones: Productos_Aplicacion[] = await this.productos_aplicacionRepository.find()
-            return prod_aplicaciones; 
-
+            let idNroAplicacion: number = await this.generarId();
+            const producto : Producto = await this.prodoductoRepository.findOne(newProdAplicacion.idProducto);
+            if(!producto){
+                throw new HttpException( { error : `Error buscando el producto: ${newProdAplicacion.idProducto}`}, HttpStatus.NOT_FOUND);
+            }
+            const aplicacion : Aplicacion = await this.aplicacionRepository.findOne(newProdAplicacion.idAplicacion);
+            if(!aplicacion){
+            throw new HttpException( { error : `Error buscando el carrito: ${newProdAplicacion.idAplicacion}`}, HttpStatus.NOT_FOUND);
+            }
+            const prodApli : Productos_Aplicacion = await this.productos_aplicacionRepository.save(new Productos_Aplicacion(
+                aplicacion.getIdAplicacion(),
+                idNroAplicacion,
+                producto.getIdProducto(),
+                newProdAplicacion.dosis,
+            ))
+            return prodApli;
             } catch (error) { 
             throw new HttpException({
             status: HttpStatus.NOT_FOUND,
@@ -53,8 +68,8 @@ export class ProductosAplicacionService {
             if (!prod_aplicacionCambia) { 
                 throw new HttpException( { error : `Error al buscar productos_aplicacion con Id: ${prod_aplicacion.nroAplicacion}`}, HttpStatus.NOT_FOUND);
             } 
-            prod_aplicacionCambia.settIdAplicacion(prod_aplicacion.idAplicacion);
-            prod_aplicacionCambia.setIdProducto (prod_aplicacion.idProducto);
+            //prod_aplicacionCambia.settIdAplicacion(prod_aplicacion.idAplicacion);
+            //prod_aplicacionCambia.setIdProducto (prod_aplicacion.idProducto);
             prod_aplicacionCambia.setDosis (prod_aplicacion.dosis);
             await this.productos_aplicacionRepository.save(prod_aplicacionCambia); 
             const prod_aplicaciones: Productos_Aplicacion[] = await this.productos_aplicacionRepository.find() 
