@@ -17,8 +17,8 @@ export class ProductosAplicacionController {
         return await this.productos_aplicacionService.getProdAplicacion(parseInt(id));
     }
     @Post("new-prod-aplicacion")
-    createProdAplicacion(@Body() prodAplicacionDto: Productos_AplicacionDTO): Promise<Productos_Aplicacion[]> {
-    return this.productos_aplicacionService.addProdAplicacion(prodAplicacionDto);
+    addProdAplicacion(@Body() prodAplicacionDto: Productos_AplicacionDTO): Promise<Productos_Aplicacion> {
+        return this.productos_aplicacionService.addProdAplicacion(prodAplicacionDto);
     }
     @Put(':id')
     public async updProdAplicacion(@Body() prodAplicacion_conIdDTO: Productos_AplicacionDTO_conId): Promise<Productos_Aplicacion[]> { 

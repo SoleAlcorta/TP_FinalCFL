@@ -45,9 +45,9 @@ export class ProductosAplicacionService {
             }
             const aplicacion : Aplicacion = await this.aplicacionRepository.findOne(newProdAplicacion.idAplicacion);
             if(!aplicacion){
-            throw new HttpException( { error : `Error buscando el carrito: ${newProdAplicacion.idAplicacion}`}, HttpStatus.NOT_FOUND);
+            throw new HttpException( { error : `Error buscando la aplicacion: ${newProdAplicacion.idAplicacion}`}, HttpStatus.NOT_FOUND);
             }
-            const prodApli : Productos_Aplicacion = await this.productos_aplicacionRepository.save(new Productos_Aplicacion(
+            const prodApli: Productos_Aplicacion = await this.productos_aplicacionRepository.save(new Productos_Aplicacion(
                 aplicacion.getIdAplicacion(),
                 idNroAplicacion,
                 producto.getIdProducto(),
