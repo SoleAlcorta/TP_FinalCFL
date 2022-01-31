@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Campo } from "src/campo/campo.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('cliente')
 export class Cliente {
@@ -11,6 +12,9 @@ export class Cliente {
 
     @Column()
     private cuit: number;
+
+    @OneToMany(type => Campo, campo => campo.cliente)
+     public campos: Campo[];
 
 
 
