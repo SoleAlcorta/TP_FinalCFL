@@ -13,23 +13,32 @@ export class Aplicacion {
 
     // @PrimaryColumn() //FK
     // private loteAplicacion: number; 
-
+    
     // @PrimaryColumn() //FK
     // private campoAplicacion: number; 
-
-    //Relacion con la tabla de detalles de aplicacion
+    
+    //Relacion con la tabla de PRODUCTOS-APLICACION
     @OneToMany(type => Productos_Aplicacion, detalleAplicados => detalleAplicados.aplicacion)
     public detallesProductosAplicados: Productos_Aplicacion[]
 
-    //Relacion con la tabla lote. OJO un lote puede tener muchas aplicaciones (en diferentes fechas)
+    //Relacion con la tabla LOTE. OJO un lote puede tener muchas aplicaciones (en diferentes fechas)
     @ManyToOne (type => Lote, lote => lote.aplicaciones)
     @JoinColumn ({ name: 'idLote'})
     public lote: Lote;
-    //Relacion con variable idCampo de la tabla lote?
-    @ManyToOne (type => Lote, loteCampo => lote.campoAplicaciones)
-    @JoinColumn ({ name: 'idCampo'})
-    public loteCampo: Lote;
 
+    //En LOTE, debería estar lo siguiente, CREO:
+    // @OneToMany(type => Aplicacion, aplicacion => aplicacion.lote)
+    // public aplicaciones: Aplicacion[];
+
+    //Relacion con variable idCampo de la tabla lote?
+    @ManyToOne (type => Lote, loteCampo => loteCampo.loteAplicaciones)
+    @JoinColumn ({ name: 'idCampo'}) //OJO, CHEQUEAR ESTO. No sé cómo se llama esta variable ahora ¿es la variable "campo"?
+    public loteCampo: Lote;
+    //En LOTE, CREO:
+    // @OneToMany(type => Aplicacion, aplicacion => aplicacion.lote)
+    // public loteAplicaciones: Aplicacion[];
+
+    //VER CÓMO QUEDARÍA EL CONSTRUCTOR...
     public constructor(aplicacionId:number, aplicacionFecha:string, aplicacionLote: Lote, aplicacionCampo: Lote){
         this.idAplicacion = aplicacionId;
         this.fechaAplicacion = aplicacionFecha;
