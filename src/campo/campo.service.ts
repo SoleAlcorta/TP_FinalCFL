@@ -13,7 +13,7 @@ export class CampoService {
     //Consultar
     public async getCampos(): Promise<Campo[]>{
         try {
-            const campos: Campo[] = await this.campoRepository.find()
+            const campos: Campo[] = await this.campoRepository.find( {relations: ['cliente', 'lotes']})
             console.log(campos)
             return campos;           
         } catch (error) { 
@@ -23,7 +23,7 @@ export class CampoService {
 
     public async getCampo(id: number): Promise<Campo>{
      try {
-            const campo: Campo = await this.campoRepository.findOne(id)
+            const campo: Campo = await this.campoRepository.findOne(id, {relations: ['cliente', 'lotes']})
             console.log(campo)
             return campo;           
         } catch (error) {
@@ -55,7 +55,7 @@ export class CampoService {
                 throw new HttpException( { error : `Error buscando el campo de Id: ${campo.idCampo}`}, HttpStatus.NOT_FOUND);
             } 
             campoCambia.setUbicacion(campo.ubicacion);
-            campoCambia.setIdCliente(campo.idCliente);
+            // campoCambia.setIdCliente(campo.idCliente); OJO, NO SÉ CÓMO SE HACE ESTO AHORA
             await this.campoRepository.save(campoCambia); 
             const campos: Campo[] = await this.campoRepository.find() 
             return campos; 
