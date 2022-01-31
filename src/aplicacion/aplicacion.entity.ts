@@ -27,16 +27,12 @@ export class Aplicacion {
     public lote: Lote;
 
     //En LOTE, debería estar lo siguiente, CREO:
-    // @OneToMany(type => Aplicacion, aplicacion => aplicacion.lote)
-    // public aplicaciones: Aplicacion[];
-
     //Relacion con variable idCampo de la tabla lote?
     @ManyToOne (type => Lote, loteCampo => loteCampo.loteAplicaciones)
     @JoinColumn ({ name: 'idCampo'}) //OJO, CHEQUEAR ESTO. No sé cómo se llama esta variable ahora ¿es la variable "campo"?
     public loteCampo: Lote;
-    //En LOTE, CREO:
-    // @OneToMany(type => Aplicacion, aplicacion => aplicacion.lote)
-    // public loteAplicaciones: Aplicacion[];
+    
+    
 
     //VER CÓMO QUEDARÍA EL CONSTRUCTOR...
     public constructor(aplicacionId:number, aplicacionFecha:string, aplicacionLote: Lote, aplicacionCampo: Lote){

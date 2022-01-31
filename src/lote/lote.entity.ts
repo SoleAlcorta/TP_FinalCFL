@@ -1,4 +1,6 @@
-import { Entity, PrimaryColumn, Column} from 'typeorm';
+import { Aplicacion } from 'src/aplicacion/aplicacion.entity';
+import { Campo } from 'src/campo/campo.entity';
+import { Entity, PrimaryColumn, Column, OneToMany, ManyToOne, JoinColumn} from 'typeorm';
 
 @Entity('e01_lote')
 export class Lote {
@@ -13,6 +15,17 @@ export class Lote {
 
     @Column()
     private idCampo: number; //Vínculo con la tabla campo
+
+
+    @OneToMany(type => Aplicacion, aplicacion => aplicacion.lote)
+     public aplicaciones: Aplicacion[];
+     
+     @OneToMany(type => Aplicacion, aplicacion => aplicacion.lote)
+     public loteAplicaciones: Aplicacion[];
+
+     @ManyToOne(type => Campo, campo => campo.lotes)
+     @JoinColumn({ name: "idCampo"})
+      public campo: Campo;
 
     public constructor(loteId:number, nombre:string, hectareas:number, idCampo:number){
         this.idLote = loteId;
