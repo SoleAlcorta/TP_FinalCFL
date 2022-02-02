@@ -16,12 +16,13 @@ export class Lote {
     @Column()
     private idCampo: number; //Vínculo con la tabla campo
 
-
+    //Relacion con la tabla APLICACION
     @OneToMany(type => Aplicacion, aplicacion => aplicacion.loteAplicacion)
      public aplicaciones: Aplicacion[];
-     
-     @OneToMany(type => Aplicacion, aplicacion => aplicacion.loteAplicacion)
-     public loteAplicaciones: Aplicacion[];
+    
+    //Esta relacion no sé cómo hacerla. Es la que relaciona el idCampo con la aplicacion.
+    //  @OneToMany(type => Aplicacion, aplicacion => aplicacion.loteCampo)
+    //  public loteAplicaciones: Aplicacion[];
 
      @ManyToOne(type => Campo, campo => campo.lotes)
      @JoinColumn({ name: "idCampo"})

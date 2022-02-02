@@ -26,18 +26,18 @@ export class Aplicacion {
     @JoinColumn ({ name: 'idLote'})
     public loteAplicacion: Lote;
 
-    // En LOTE, debería estar lo siguiente, CREO:
     // Relacion con variable idCampo de la tabla lote?
-    @ManyToOne (type => Lote, loteCampo => loteCampo.loteAplicaciones)
-    @JoinColumn ({ name: 'idCampo'}) //OJO, CHEQUEAR ESTO. No sé cómo se llama esta variable ahora ¿es la variable "campo"?
-    public loteCampo: Lote;
+    //ESTA RELACIO NO SÉ SI VA
+    // @ManyToOne (type => Lote, loteCampo => loteCampo.loteAplicaciones)
+    // @JoinColumn ({ name: 'idCampo'}) //OJO, CHEQUEAR ESTO. No sé cómo se llama esta variable ahora ¿es la variable "campo"?
+    // public loteCampo: Lote;
     
     //VER CÓMO QUEDARÍA EL CONSTRUCTOR...
-    public constructor(aplicacionId:number, aplicacionFecha:string, aplicacionLote: Lote, aplicacionCampo: Lote){
+    public constructor(aplicacionId:number, aplicacionFecha:string, aplicacionLote?: Lote/*, aplicacionCampo?: Lote*/){
         this.idAplicacion = aplicacionId;
         this.fechaAplicacion = aplicacionFecha;
         this.loteAplicacion = aplicacionLote;
-        this.loteCampo = aplicacionCampo;
+        // this.loteCampo = aplicacionCampo;
     }
 
     public getIdAplicacion():number{ return this.idAplicacion; }

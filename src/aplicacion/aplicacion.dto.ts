@@ -1,5 +1,7 @@
+import { Lote } from "src/lote/lote.entity";
+
 export class AplicacionDTO {
     readonly fechaAplicacion: string;
-    readonly loteAplicacion: number;
-    readonly campoAplicacion: number;
+    readonly loteAplicacion: Lote;
+    // readonly loteCampo: Lote;
 }

@@ -35,12 +35,12 @@ export class ProductosAplicacionService {
         }
     }
 
-    //Agregar  OJO. ¿EXISTE ALGUNA MANERA DE AGREGAR MÁS PRODUCTOS Y MÁS DOSIS EN LA APLICACIÓN?
+    //Agregar  
     public async addProdAplicacion(newProdAplicacion: Productos_AplicacionDTO): Promise <Productos_Aplicacion[]> {
         try {
             let idProductoAplicacion: number = await this.generarId();
-            let productoNuevo = new Productos_Aplicacion(idProductoAplicacion, newProdAplicacion.nroAplicacion, newProdAplicacion.idProducto, newProdAplicacion.dosis);
-            await this.productos_aplicacionRepository.save(productoNuevo);
+            let productoAplicacionNuevo = new Productos_Aplicacion(idProductoAplicacion, newProdAplicacion.idAplicacion, newProdAplicacion.idProducto, newProdAplicacion.dosis);
+            await this.productos_aplicacionRepository.save(productoAplicacionNuevo);
             const prodAplicacion: Productos_Aplicacion[]= await this.productos_aplicacionRepository.find()
             return prodAplicacion;
 
