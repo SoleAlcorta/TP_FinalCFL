@@ -35,31 +35,44 @@ export class ProductosAplicacionService {
         }
     }
 
-    //Agregar  OJO. ¿EXISTE ALGUNA MANERA DE AGREGAR MÁS PRODUCTOS Y MÁS DOSIS EN LA APLICACIÓN?
-    public async addProdAplicacion(newProdAplicacion: Productos_AplicacionDTO): Promise <Productos_Aplicacion> {
+    //Agregar  
+    public async addProdAplicacion(newProdAplicacion: Productos_AplicacionDTO): Promise <Productos_Aplicacion[]> {
         try {
-            let idNroAplicacion: number = await this.generarId();
-            const producto : Producto = await this.prodoductoRepository.findOne(newProdAplicacion.idProducto);
-            if(!producto){
-                throw new HttpException( { error : `Error buscando el producto: ${newProdAplicacion.idProducto}`}, HttpStatus.NOT_FOUND);
-            }
-            const aplicacion : Aplicacion = await this.aplicacionRepository.findOne(newProdAplicacion.idAplicacion);
-            if(!aplicacion){
-            throw new HttpException( { error : `Error buscando la aplicacion: ${newProdAplicacion.idAplicacion}`}, HttpStatus.NOT_FOUND);
-            }
-            const prodApli: Productos_Aplicacion = await this.productos_aplicacionRepository.save(new Productos_Aplicacion(
-                aplicacion.getIdAplicacion(),
-                idNroAplicacion,
-                producto.getIdProducto(),
-                newProdAplicacion.dosis,
-            ))
-            return prodApli;
+            let idProductoAplicacion: number = await this.generarId();
+            let productoAplicacionNuevo = new Productos_Aplicacion(idProductoAplicacion, newProdAplicacion.idAplicacion, newProdAplicacion.idProducto, newProdAplicacion.dosis);
+            await this.productos_aplicacionRepository.save(productoAplicacionNuevo);
+            const prodAplicacion: Productos_Aplicacion[]= await this.productos_aplicacionRepository.find()
+            return prodAplicacion;
+
             } catch (error) { 
             throw new HttpException({
             status: HttpStatus.NOT_FOUND,
             error: "Hay un error en la solicitud, " + error,
             }, HttpStatus.NOT_FOUND);
         }
+        // try {
+        //     let idNroAplicacion: number = await this.generarId();
+        //     const producto : Producto = await this.prodoductoRepository.findOne(newProdAplicacion.idProducto);
+        //     if(!producto){
+        //         throw new HttpException( { error : `Error buscando el producto: ${newProdAplicacion.idProducto}`}, HttpStatus.NOT_FOUND);
+        //     }
+        //     const aplicacion : Aplicacion = await this.aplicacionRepository.findOne(newProdAplicacion.idAplicacion);
+        //     if(!aplicacion){
+        //     throw new HttpException( { error : `Error buscando la aplicacion: ${newProdAplicacion.idAplicacion}`}, HttpStatus.NOT_FOUND);
+        //     }
+        //     const prodApli: Productos_Aplicacion = await this.productos_aplicacionRepository.save(new Productos_Aplicacion(
+        //         aplicacion.getIdAplicacion(),
+        //         idNroAplicacion,
+        //         producto.getIdProducto(),
+        //         newProdAplicacion.dosis,
+        //     ))
+        //     return prodApli;
+        //     } catch (error) { 
+        //     throw new HttpException({
+        //     status: HttpStatus.NOT_FOUND,
+        //     error: "Hay un error en la solicitud, " + error,
+        //     }, HttpStatus.NOT_FOUND);
+        // }
     }
     // Actualizar
     public async updProdAplicacion(prod_aplicacion: Productos_AplicacionDTO_conId): Promise<Productos_Aplicacion[]> { 

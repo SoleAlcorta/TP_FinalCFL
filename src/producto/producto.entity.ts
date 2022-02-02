@@ -9,8 +9,8 @@ export class Producto {
     @Column()
     private nombre: string;
 
-    @OneToMany((type) => Productos_Aplicacion, aplicaciones => aplicaciones.producto)
-    public aplicaciones: Productos_Aplicacion[];
+    @OneToMany((type) => Productos_Aplicacion, detalleAplicacion => detalleAplicacion.producto)
+    public aplicacionDetalles: Productos_Aplicacion[];
 
     public constructor(productoId:number, nombre:string){
         this.idProducto = productoId;

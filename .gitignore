@@ -35,5 +35,6 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 #Otros
-.spect.ts
+*.spect.ts
 ormconfig.json
+C:\Users\Usuario\Desktop\TP_FinalCFL\ormconfig.json

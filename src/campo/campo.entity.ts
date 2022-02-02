@@ -18,15 +18,10 @@ export class Campo {
     @JoinColumn({ name: "idCliente"})
     public cliente: Cliente; //Esta variable sería la FK, que representa el idCliente?
 
-    //En el CLIENTE debería estar lo siguiente, CREO:
-      
-
     //Relacion con LOTE
     @OneToMany(type => Lote, lote => lote.campo)
     public lotes: Lote[]; //Esta sería la FK, que contiene los idLote?
-    
-    
-
+     
     public constructor(campoId:number, lugar:string, idCliente?:number){
         this.idCampo = campoId;
         this.ubicacion = lugar;
