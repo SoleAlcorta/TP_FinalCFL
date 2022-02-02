@@ -24,21 +24,19 @@ export class Aplicacion {
     //Relacion con la tabla LOTE. OJO un lote puede tener muchas aplicaciones (en diferentes fechas)
     @ManyToOne (type => Lote, lote => lote.aplicaciones)
     @JoinColumn ({ name: 'idLote'})
-    public lote: Lote;
+    public loteAplicacion: Lote;
 
-    //En LOTE, debería estar lo siguiente, CREO:
-    //Relacion con variable idCampo de la tabla lote?
+    // En LOTE, debería estar lo siguiente, CREO:
+    // Relacion con variable idCampo de la tabla lote?
     @ManyToOne (type => Lote, loteCampo => loteCampo.loteAplicaciones)
     @JoinColumn ({ name: 'idCampo'}) //OJO, CHEQUEAR ESTO. No sé cómo se llama esta variable ahora ¿es la variable "campo"?
     public loteCampo: Lote;
     
-    
-
     //VER CÓMO QUEDARÍA EL CONSTRUCTOR...
     public constructor(aplicacionId:number, aplicacionFecha:string, aplicacionLote: Lote, aplicacionCampo: Lote){
         this.idAplicacion = aplicacionId;
         this.fechaAplicacion = aplicacionFecha;
-        this.lote = aplicacionLote;
+        this.loteAplicacion = aplicacionLote;
         this.loteCampo = aplicacionCampo;
     }
 

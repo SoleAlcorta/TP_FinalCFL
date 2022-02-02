@@ -17,7 +17,7 @@ export class AplicacionController {
         return await this.aplicacionService.getAplicacion(parseInt(id));
     }
     @Post("new-aplicacion")
-    createAplicacion(@Body() aplicacionDto: AplicacionDTO): Promise<Aplicacion[]> {
+    createAplicacion(@Body() aplicacionDto: AplicacionDTO): Promise<Aplicacion> {
     return this.aplicacionService.addAplicacion(aplicacionDto);
     }
     // @Put(':id')

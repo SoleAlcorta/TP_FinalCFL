@@ -3,8 +3,8 @@
     "host": "localhost",
     "port": 3306,
     "username": "root",
-    "password":
-    "database":
+    "password":"danni219852",
+    "database": "producto",
     "entities": [
       "dist/**/**.entity{.ts,.js}"
     ],

@@ -25,18 +25,32 @@ export class Productos_Aplicacion {
     @JoinColumn({ name: 'idProducto' })
     public producto: Producto;
 
+
     public constructor(idAplicacion: number, aplicacionNro: number, idProducto: number, dosis: string){
         this.idAplicacion = aplicacionNro;
-        this.nroAplicacion = idAplicacion; 
+        this.nroAplicacion = idAplicacion;
         this.idProducto = idProducto;
         this.dosis = dosis;
  
     }       
 
     public getNroAplicacion():number{ return this.nroAplicacion; }
-    // public getIdAplicacion():number{ return this.idAplicacion; }
+    public getIdAplicacion():number{ return this.idAplicacion; }
     // public getIdProducto():number{ return this.idProducto; }
     public getDosis():string{ return this.dosis; }
+
+    // public constructor(idAplicacion: number, aplicacionNro: number, idProducto: number, dosis: string){
+    //     this.idAplicacion = aplicacionNro;
+    //     this.nroAplicacion = idAplicacion; 
+    //     this.idProducto = idProducto;
+    //     this.dosis = dosis;
+ 
+    // }       
+
+    // public getNroAplicacion():number{ return this.nroAplicacion; }
+    // // public getIdAplicacion():number{ return this.idAplicacion; }
+    // // public getIdProducto():number{ return this.idProducto; }
+    // public getDosis():string{ return this.dosis; }
 
     public setNroAplicacion(nroAplicacion:number): void { this.nroAplicacion = nroAplicacion; }
     // public settIdAplicacion(idAplicacion:number): void{ this.idAplicacion = idAplicacion; }

@@ -17,7 +17,7 @@ export class ProductosAplicacionController {
         return await this.productos_aplicacionService.getProdAplicacion(parseInt(id));
     }
     @Post("new-prod-aplicacion")
-    addProdAplicacion(@Body() prodAplicacionDto: Productos_AplicacionDTO): Promise<Productos_Aplicacion> {
+    addProdAplicacion(@Body() prodAplicacionDto: Productos_AplicacionDTO): Promise<Productos_Aplicacion[]> {
         return this.productos_aplicacionService.addProdAplicacion(prodAplicacionDto);
     }
     @Put(':id')

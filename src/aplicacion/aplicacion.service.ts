@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Campo } from 'src/campo/campo.entity';
 import { Lote } from 'src/lote/lote.entity';
 import { Productos_Aplicacion } from 'src/productos-aplicacion/productos_aplicacion.entity';
 import { Repository } from 'typeorm';
@@ -10,6 +11,7 @@ import { Aplicacion } from './aplicacion.entity';
 
 @Injectable()
 export class AplicacionService {
+    campoRepository: any;
 
     constructor (
         @InjectRepository(Aplicacion) private readonly aplicacionRepository : Repository<Aplicacion>,
@@ -39,20 +41,45 @@ export class AplicacionService {
     }
 
     //Agregar
-    public async addAplicacion(newAplicacion: AplicacionDTO): Promise<Aplicacion[]> {
+    public async addAplicacion(newAplicacion: AplicacionDTO): Promise<Aplicacion> {
         try {
-            let idAplicacion: number = await this.generarId();
-            let aplicacionCreada = new Aplicacion(idAplicacion, newAplicacion.fechaAplicacion, newAplicacion.loteAplicacion, newAplicacion.campoAplicacion)
-            await this.aplicacionRepository.save(aplicacionCreada);
-            const aplicaciones: Aplicacion[] = await this.aplicacionRepository.find()
-            return aplicaciones; 
-
+            let idNroAplicacion: number = await this.generarId();
+            const lote : Lote = await this.loteRepository.findOne(newAplicacion.loteAplicacion);
+            if(!lote){
+                throw new HttpException( { error : `Error buscando el lote: ${newAplicacion.loteAplicacion}`}, HttpStatus.NOT_FOUND);
+            }
+            const campo : Lote = await this.campoRepository.findOne(newAplicacion.campoAplicacion);
+            if(!lote){
+            throw new HttpException( { error : `Error buscando el lote: ${newAplicacion.campoAplicacion}`}, HttpStatus.NOT_FOUND);
+            }
+            const aplicacion: Aplicacion = await this.aplicacionRepository.save(new Aplicacion(
+                idNroAplicacion,
+                newAplicacion.fechaAplicacion,
+                lote,
+                campo
+            ));
+            return aplicacion;
             } catch (error) { 
             throw new HttpException({
             status: HttpStatus.NOT_FOUND,
             error: "Hay un error en la solicitud, " + error,
             }, HttpStatus.NOT_FOUND);
         }
+
+
+        // try {
+        //     let idAplicacion: number = await this.generarId();
+        //     let aplicacionCreada = new Aplicacion(idAplicacion, newAplicacion.fechaAplicacion, newAplicacion.loteAplicacion, newAplicacion.campoAplicacion)
+        //     await this.aplicacionRepository.save(aplicacionCreada);
+        //     const aplicaciones: Aplicacion[] = await this.aplicacionRepository.find()
+        //     return aplicaciones; 
+
+        //     } catch (error) { 
+        //     throw new HttpException({
+        //     status: HttpStatus.NOT_FOUND,
+        //     error: "Hay un error en la solicitud, " + error,
+        //     }, HttpStatus.NOT_FOUND);
+        // }
     }
     // Actualizar
     // public async updAplicacion(aplicacion: AplicacionDTO_conId): Promise<Aplicacion[]> { 

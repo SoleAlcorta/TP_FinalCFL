@@ -17,10 +17,10 @@ export class Lote {
     private idCampo: number; //Vínculo con la tabla campo
 
 
-    @OneToMany(type => Aplicacion, aplicacion => aplicacion.lote)
+    @OneToMany(type => Aplicacion, aplicacion => aplicacion.loteAplicacion)
      public aplicaciones: Aplicacion[];
      
-     @OneToMany(type => Aplicacion, aplicacion => aplicacion.lote)
+     @OneToMany(type => Aplicacion, aplicacion => aplicacion.loteAplicacion)
      public loteAplicaciones: Aplicacion[];
 
      @ManyToOne(type => Campo, campo => campo.lotes)
