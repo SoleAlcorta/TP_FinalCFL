@@ -35,7 +35,7 @@ export class CampoService {
     public async addCampo(newCampo: CampoDTO): Promise<Campo[]> {
         try {
             let idCampo: number = await this.generarId();
-            let campoCreado = new Campo(idCampo, newCampo.ubicacion, newCampo.idCliente)
+            let campoCreado = new Campo(idCampo, newCampo.nombre, newCampo.ubicacion, newCampo.idCliente)
             await this.campoRepository.save(campoCreado);
             const campos: Campo[] = await this.campoRepository.find()
             return campos; //averiguar cómo retorno sólo el campo creado. O si es mejor así.
@@ -54,6 +54,7 @@ export class CampoService {
             if (!campoCambia) { 
                 throw new HttpException( { error : `Error buscando el campo de Id: ${campo.idCampo}`}, HttpStatus.NOT_FOUND);
             } 
+            campoCambia.setNombre(campo.nombre)
             campoCambia.setUbicacion(campo.ubicacion);
             // campoCambia.setIdCliente(campo.idCliente); OJO, NO SÉ CÓMO SE HACE ESTO AHORA
             await this.campoRepository.save(campoCambia); 
