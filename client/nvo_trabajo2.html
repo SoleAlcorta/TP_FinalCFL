@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+    <div>
+        <p>Complete los siguientes datos:</p>
+        <!-- FECHA -->
+        <form>
+            Fecha:
+            <input type="date" name="fecha" id="fecha">
+        </form>
+        
+        <!-- ESTABLECIMIENTO -->
+        <form>
+            Establecimiento:
+            <select id="listaCampos">
+                <option value=""></option>
+            </select>
+            Lote:
+            <select id="listaLotes">
+                <option value="">una opcion</option>
+            </select>
+            <span id="ver has"></span>
+            <!-- una vez seleccionado el lote, quiero que me muestre las hectareas. -->
+        </form>
+        <!-- Ambos select podrían incluir la opción OTRO, para ingresar nuevos datos. -->
+        
+        <div id="respuesta"></div>
+        <!-- En este div quiero mostrar los datos del productor -->
+
+        <button class="btnAddCampo">Nuevo Campo</button>
+        <button class="btnNvoLote">Nuevo Lote</button>
+
+
+
+<!-- ############################################################################################ -->
+
+        <!-- PRODUCTOS -->
+        <form>
+            Producto:
+            <input type="text" name="producto" id="prod" list="listaProductos">
+            <datalist id="listaProductos">
+                <option value="">una opcion</option>
+            </datalist>
+
+            Dosis:
+            <input type="string" name="dosis" id="dosis">
+
+        </form>
+
+<!-- ############################################################################################ -->
+
+        <button class="btnAddProd">agregar producto</button>
+
+        <button class="btnAddLote">agregar lote</button>
+
+        <button class="btnGuardar">Listo</button>
+
+    </div>
+    
+    
+    <script src="js/nvoTrabSelects.js"></script>
+</body>
+</html>
