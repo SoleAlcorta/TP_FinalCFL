@@ -11,15 +11,21 @@ export class Aplicacion {
     @Column()
     private fechaAplicacion: string;
 
+    @Column()
+    private producto: string;
+
+    @Column()
+    private dosis: string;
+
     // @PrimaryColumn() //FK
     // private loteAplicacion: number; 
     
     // @PrimaryColumn() //FK
-    // private campoAplicacion: number; 
+    // private campoAplicacion: number;
     
     //Relacion con la tabla de PRODUCTOS-APLICACION
-    @OneToMany(type => Productos_Aplicacion, detalleAplicados => detalleAplicados.aplicacion)
-    public detallesProductosAplicados: Productos_Aplicacion[]
+    // @OneToMany(type => Productos_Aplicacion, detalleAplicados => detalleAplicados.aplicacion)
+    // public detallesProductosAplicados: Productos_Aplicacion[]
 
     //Relacion con la tabla LOTE. OJO un lote puede tener muchas aplicaciones (en diferentes fechas)
     @ManyToOne (type => Lote, lote => lote.aplicaciones)
@@ -33,10 +39,12 @@ export class Aplicacion {
     // public loteCampo: Lote;
     
     //VER CÓMO QUEDARÍA EL CONSTRUCTOR...
-    public constructor(aplicacionId:number, aplicacionFecha:string, aplicacionLote?: Lote/*, aplicacionCampo?: Lote*/){
+    public constructor(aplicacionId:number, aplicacionFecha:string, aplicacionLote?: Lote, aplicacionProducto?: string, aplicacionDosis?: string/*, aplicacionCampo?: Lote*/){
         this.idAplicacion = aplicacionId;
         this.fechaAplicacion = aplicacionFecha;
         this.loteAplicacion = aplicacionLote;
+        this.producto = aplicacionProducto;
+        this.dosis = aplicacionDosis;
         // this.loteCampo = aplicacionCampo;
     }
 
@@ -44,10 +52,14 @@ export class Aplicacion {
     public getFechaAplicacion():string{ return this.fechaAplicacion; }
     // public getLoteAplicacion():number{ return this.loteAplicacion; }
     // public getCampoAplicacion():number{ return this.campoAplicacion; }
+    public getProducto():string{ return this.producto};
+    public getDosis(): string { return this.dosis};
 
     public setIdAplicacion(idAplicacion:number): void { this.idAplicacion = idAplicacion; }
     public setFechaAplicacion(fechaAplicacion: string): void{ this.fechaAplicacion = fechaAplicacion; }
     // public setLoteAplicacion(loteAplicacion:number): void{ this.loteAplicacion = loteAplicacion; }
     // public setCampoAplicacion(campoAplicacion:number): void{ this.campoAplicacion = campoAplicacion; }
+    public setProducto(producto: string): void { this.producto = producto};
+    public setDosis(dosis:string): void{ this.dosis=dosis};
 
 }

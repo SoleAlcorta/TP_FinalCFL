@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { application } from 'express';
 import { AplicacionDTO } from './aplicacion.dto';
 import { Aplicacion } from './aplicacion.entity';
 import { AplicacionService } from './aplicacion.service';
@@ -19,6 +20,10 @@ export class AplicacionController {
     @Post('new-aplicacion')
     createAplicacion(@Body() aplicacionDto: AplicacionDTO): Promise<Aplicacion[]> {
     return this.aplicacionService.addAplicacion(aplicacionDto);
+    }
+    @Get() //Devuelve el resultado de la consulta seleccionada
+    create(@Body() consultas: any): Promise<Aplicacion[]> {
+        return this.aplicacionService.addAplicacion(consultas);
     }
     @Put(':id')
     public async updAplicacion(@Param('id') id:number,@Body() aplicacionDTO: AplicacionDTO): Promise<string> {
