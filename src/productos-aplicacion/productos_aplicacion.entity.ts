@@ -18,9 +18,9 @@ export class Productos_Aplicacion {
     private dosis: string;
 
     //Relacion con la tabla APLICACION
-    @ManyToOne((type) => Aplicacion, aplicacion => aplicacion.detallesProductosAplicados)
-    @JoinColumn({ name: 'idAplicacion' })
-    public aplicacion: Aplicacion;
+    // @ManyToOne((type) => Aplicacion, aplicacion => aplicacion.detallesProductosAplicados)
+    // @JoinColumn({ name: 'idAplicacion' })
+    // public aplicacion: Aplicacion;
     //Relacion con la tabla PRODUCTO
     @ManyToOne((type) => Producto, producto => producto.aplicacionDetalles)
     @JoinColumn({ name: 'idProducto' })
@@ -29,7 +29,7 @@ export class Productos_Aplicacion {
 
     public constructor(aplicacionNro: number, idAplicacion: Aplicacion, idProducto: Producto, dosis: string){
         this.nroAplicacion = aplicacionNro;
-        this.aplicacion = idAplicacion;
+        // this.aplicacion = idAplicacion;
         this.producto = idProducto;
         this.dosis = dosis;
     }       

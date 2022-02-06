@@ -39,55 +39,15 @@ export class AplicacionService {
         }
     }
 
-    //Agregar
-    // public async addAplicacion(newAplicacion: AplicacionDTO): Promise<Aplicacion> {
-    //     try {
-    //         let idNroAplicacion: number = await this.generarId();
-    //         const lote : Lote = await this.loteRepository.findOne(newAplicacion.loteAplicacion);
-    //         if(!lote){
-    //             throw new HttpException( { error : `Error buscando el lote: ${newAplicacion.loteAplicacion}`}, HttpStatus.NOT_FOUND);
-    //         }
-    //         const campo : Lote = await this.campoRepository.findOne(newAplicacion.campoAplicacion);
-    //         if(!lote){
-    //         throw new HttpException( { error : `Error buscando el lote: ${newAplicacion.campoAplicacion}`}, HttpStatus.NOT_FOUND);
-    //         }
-    //         const aplicacion: Aplicacion = await this.aplicacionRepository.save(new Aplicacion(
-    //             idNroAplicacion,
-    //             newAplicacion.fechaAplicacion,
-    //             lote,
-    //             campo
-    //         ));
-    //         return aplicacion;
-    //         } catch (error) { 
-    //         throw new HttpException({
-    //         status: HttpStatus.NOT_FOUND,
-    //         error: "Hay un error en la solicitud, " + error,
-    //         }, HttpStatus.NOT_FOUND);
-    //     }
-
-        //----------------------------------------------------
-        // try {
-        //     let idAplicacion: number = await this.generarId();
-        //     let aplicacionCreada = new Aplicacion(idAplicacion, newAplicacion.fechaAplicacion, newAplicacion.loteAplicacion, newAplicacion.campoAplicacion)
-        //     await this.aplicacionRepository.save(aplicacionCreada);
-        //     const aplicaciones: Aplicacion[] = await this.aplicacionRepository.find()
-        //     return aplicaciones; 
-
-        //     } catch (error) { 
-        //     throw new HttpException({
-        //     status: HttpStatus.NOT_FOUND,
-        //     error: "Hay un error en la solicitud, " + error,
-        //     }, HttpStatus.NOT_FOUND);
-        // }
-    //}
-
-    //Agregar 2
     public async addAplicacion(newAplicacion: AplicacionDTO): Promise<Aplicacion[]> {
+        
         try {
             let idAplicacion: number = await this.generarId();
-            let aplicacionNueva = new Aplicacion(idAplicacion, newAplicacion.fechaAplicacion, newAplicacion.loteAplicacion/*, newAplicacion.loteCampo*/);
+            console.log(idAplicacion);
+            let aplicacionNueva = new Aplicacion(idAplicacion, newAplicacion.fechaAplicacion, newAplicacion.loteAplicacion, newAplicacion.producto, newAplicacion.dosis/*, newAplicacion.loteCampo*/);
+            console.log(newAplicacion);
             await this.aplicacionRepository.save(aplicacionNueva);
-            const aplicacion: Aplicacion[] = await this.aplicacionRepository.find()
+            const aplicacion: Aplicacion[] = await this.aplicacionRepository.find();
             return aplicacion;
 
         } catch (error) { 
@@ -105,6 +65,8 @@ export class AplicacionService {
             throw new HttpException('La aplicacion no existe', 404);
         } else {
             aplicacionCambia.setFechaAplicacion(aplicacionDTO.fechaAplicacion);
+            aplicacionCambia.setProducto(aplicacionDTO.producto);
+            aplicacionCambia.setDosis(aplicacionDTO.dosis);
             // aplicacionCambia.setLoteAplicacion(aplicacion.loteAplicacion);
             // aplicacionCambia.setCampoAplicacion(aplicacion.campoAplicacion);
             await this.aplicacionRepository.save(aplicacionCambia);
