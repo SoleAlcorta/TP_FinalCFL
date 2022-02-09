@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Facturas</title>
+</head>
+<body>
+    <div class="general">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#"></a>
+              <!-- <img src="C:\Users\PC\Desktop\FRONT- FACTURA\imagenes\logo blanco.jpeg" alt="" width="150" height="150"> -->
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Consultas</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Facturas</a>
+                  </li>
+        
+                </ul>
+              </div>
+            </div>
+        </nav>
+    </div>
+        <br>
+          <h1><center><p>Generar Factura</p></center></h1>
+        <br>
+          <center>
+          <form action="nombre">
+            <label for="nombre">
+                <span>Ingrese Nombre y Apellido o Razón Social del productor:</span>
+                <input type="text" id="nombre" value="" placeholder="Nombre y Apellido">
+            </label>
+          </form>
+          <br>
+            <form action="campo">
+              <label for="campo">
+                <span>Seleccione Campo:</span>
+                <select id="listaCampos">
+                  <option value="" placeholder="Campos"></option>
+              </select>
+              </label>
+            </form>
+          <br>
+          <form action="precio1">
+            <label for="precio1">
+                <span>Ingrese precio hectarea::</span>
+                <input type="number" id="precio" value="" placeholder="precio x ha">
+            </label>
+          </form>
+
+          <form action="periodo">
+            <label for="periodo">
+              <span>Ingrese Periodo a Facturar: </span>
+              <br>
+              <span>Desde: </span> <input type="date" id="periodo1"> <span>Hasta:</span> <input type="date" id="periodo2">
+          </label>
+          </form>
+          <br>
+
+        <h2><center>Resultados de la busqueda:</center></h2>
+          <table style="width: 50%">
+                <tr>
+                    <th colspan= "3">Descripcion</th>
+                    <th>Precio</th>
+                </tr>
+                <tbody id="tablaResultados"> 
+                  <tr id="carga_datos">
+                    <td id="fecha">a</td>
+                    <td id="lote">b</td>
+                    <td id="hta">c</td>
+                    <td id="precio">d</td>
+                  </tr>
+                </tbody>
+                <tr>
+                    <th colspan= "3">Total</th>
+                    <th id="total">$</th>
+                </tr>
+            </table>
+
+          <br>
+
+          
+          <input type="submit" value="Generar Factura" id="btnImprimir" src="http://aqui la url del boton"></a>
+        </center>
+        
+<!-- <script src="js/factura.js"></script> -->
+<script src="js/factu2.js"></script>
+</body>
+</html>
