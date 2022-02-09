@@ -34,23 +34,53 @@
         <div id="respuesta"></div>
         <!-- En este div quiero mostrar los datos del productor -->
 
-        <button class="btnAddCampo">Nuevo Campo</button>
-        <button class="btnNvoLote">Nuevo Lote</button>
+        <button id="btnAddCampo">Nuevo Campo</button>
+        <button id="btnNvoLote">Nuevo Lote</button>
 
-
+        <!-- ######################################## -->
+        <div id="nvoCampo" class="nvoElemento">
+            <form>
+                Ingrese el nombre del Campo:
+                <input id="nvoEstablecimiento" type="text">
+            </form>
+            <form>
+                Ingrese la ubicacion del Campo:
+                <input id="ubicacionNvoCampo" type="text">
+            </form>
+            <form>
+                Ingrese nombre y apellido o razón social del cliente:
+                <input type="text" name="producto" id="slcCliente" list="listaClientes">
+                <datalist id="listaClientes">
+                    <option value="">una opcion</option>
+                </datalist>
+                Ingrese el C.U.I.T. del cliente:
+                <input id="nvoCuit" type="number">
+            </form>
+            <BUtton id="campoNvoListo">Listo</BUtton>
+        </div>
 
 <!-- ############################################################################################ -->
+
+        <div class="nvoElemento">
+            <form>
+                Ingrese el nombre del Lote:
+                <input type="text" id="nvoLote">
+            </form>
+            <form>
+                Ingrese la cantidad de hectareas:
+                <input type="number" id="nvasHas1">
+            </form>
+            <button id="nvoLoteListo">Listo</button>
+        </div>
+
+        <!-- ########################################### -->
 
         <!-- PRODUCTOS -->
         <form>
             Producto:
-            <input type="text" name="producto" id="prod" list="listaProductos">
-            <datalist id="listaProductos">
-                <option value="">una opcion</option>
-            </datalist>
-
+            <input type="text" id="prod">
             Dosis:
-            <input type="string" name="dosis" id="dosis">
+            <input type="string" id="dosis">
 
         </form>
 
