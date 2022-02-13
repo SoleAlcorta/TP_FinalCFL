@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="css/nvo_trabajo.css">
 </head>
 <body>
     <div>
@@ -56,12 +56,19 @@
                 Ingrese el C.U.I.T. del cliente:
                 <input id="nvoCuit" type="number">
             </form>
-            <BUtton id="campoNvoListo">Listo</BUtton>
+            <form>
+                Ingrese el lote:
+                <input type="text" id="nvoLote_yCampo">
+           
+                Cantidad de hectareas:
+                <input type="number" name="" id="hasNvoLote_yCampo">
+            </form>
+            <button id="campoNvoListo">Listo</BUtton>
         </div>
 
 <!-- ############################################################################################ -->
 
-        <div class="nvoElemento">
+        <div id="inputsNvoLote" class="nvoElemento">
             <form>
                 Ingrese el nombre del Lote:
                 <input type="text" id="nvoLote">
@@ -77,20 +84,48 @@
 
         <!-- PRODUCTOS -->
         <form>
+            ¿Cuántos productos desea ingresar?
+            <input type="number" id="cantidadProd">
+            <!-- Aca podría generar los input en base al numero ingresado... -->
+        </form>
+        <form>
             Producto:
             <input type="text" id="prod">
             Dosis:
             <input type="string" id="dosis">
-
         </form>
+        <!-- <form>
+            Producto:
+            <input type="text" id="prod2">
+            Dosis:
+            <input type="string" id="dosis2">
+        </form>
+        <form>
+            Producto:
+            <input type="text" id="prod3">
+            Dosis:
+            <input type="string" id="dosis3">
+        </form>
+        <form>
+            Producto:
+            <input type="text" id="prod4">
+            Dosis:
+            <input type="string" id="dosis4">
+        </form>
+ -->
 
 <!-- ############################################################################################ -->
+        
+        <!-- Mejoras a futuro... -->
+        <!-- Ingresar otro producto -->
+        <!-- <div id="otro producto"></div>
+        <button class="btnAddProd">agregar producto</button> -->
+        
+        <!-- Ingresar otro lote -->
+        <!-- <div id="otro lote"></div>
+        <button class="btnAddLote">Agregar otro lote</button> -->
 
-        <button class="btnAddProd">agregar producto</button>
-
-        <button class="btnAddLote">agregar lote</button>
-
-        <button class="btnGuardar">Listo</button>
+        <button id="btnFinish">Listo</button>
 
     </div>
     
