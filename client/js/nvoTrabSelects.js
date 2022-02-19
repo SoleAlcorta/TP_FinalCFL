@@ -37,7 +37,7 @@ let btnNvoLote = document.getElementById("btnNvoLote");
 btnNvoLote.addEventListener('click', () => {
     dtlLote.value = 0;
     inputsNvoLote.classList.toggle("nvoElemento");
-    console.log(dtlLote.value);
+    // console.log(dtlLote.value);
 })
 
 let nvoLote = document.getElementById("nvoLote");
@@ -45,11 +45,10 @@ let hasNvoLote = document.getElementById("nvasHas1");
 let btnListoNvoLote = document.getElementById("nvoLoteListo");
 btnListoNvoLote.addEventListener('click', guardarNvoLote);
 // btnListoNvoLote.addEventListener('click', () => {
-//     let nombre = nvoLote.value;
-//     let has = hasNvoLote.value;
-//     let idCampo = dtlCampo.value;
-
-//     guardarNvoLote(nombre, has, idCampo);
+//     guardarNvoLote();
+//     loadLote();//Le agregé que actualize el arreglo, una vez finalizado el guardar
+//     console.log("Btn listo nvo lote:"); 
+//     console.log(allLotes); //No trae el recien creado...
 // });
 
 
@@ -178,7 +177,7 @@ loadClientes();
 let todosLosCampos = [];
 loadCampos()
 
-async function guardarCampoNvo(){
+async function guardarCampoNvo(){ //Creo que falla el orden de los factores...
     try {
         let nombre = inpNvoCampo.value;
         let ubicacion = inpNvaUbicacion.value;
@@ -191,7 +190,24 @@ async function guardarCampoNvo(){
         let control = 0;
         let nvoCampo = {};
         let nvoCliente = {};
-        let nvoLote = {};
+        let nvoLote = [];
+
+        nvoLote = {
+                "nombre": loteNvoCampo,
+                "hectareas": hasLoteNvoCampo,
+                "idCampo": todosLosCampos.length+1
+            };
+        
+        console.log("nvoLote:");
+        console.log(nvoLote);
+
+        // crear("lote/new-lote", nvoLote, allLotes); //Le paso tambien el arreglo
+        // loadLote();
+        // console.log(allLotes); //No me toma el lote nuevo...
+
+        //Probando crear de otra manera...
+        crearLote(nvoLote);
+        //
 
         for (let i = 0; i < todosLosClientes.length; i++) {
             if (razonSocial == todosLosClientes[i].razonSocial) {
@@ -204,20 +220,29 @@ async function guardarCampoNvo(){
                     "ubicacion": ubicacion,
                     "cliente": {
                         "idCliente": idCliente,
-                        "razonSocial": razonSocial,
+                        "razonSocial": todosLosClientes[i].razonSocial,
                         "cuit": todosLosClientes[i].cuit
                     },
-                };
+                    "lotes": [
+                        {
+                        "nombre": loteNvoCampo,
+                        "hectareas": hasLoteNvoCampo,
+                        "idCampo": todosLosCampos.length+1   
+                        }
+                    ]
+                }
+                
                 // console.log("El campo con el id ya existente: ");
                 // console.log(nvoCampo);
-                crear("/campo/new-campo", nvoCampo);
+                crear("/campo/new-campo", nvoCampo, todosLosCampos); //Le paso tambien el arreglo
+                // loadCampos();
             }
         }
         
         //Si la variable control es 0, significa que no se encontró la razon social en la BD. 
         if (control == 0) {
             //Entonces el nuevo id será 1 más al ya existente (que coincide con el tamaño del arreglo, creo)
-            idCliente = todosLosClientes.length +1;
+            idCliente = todosLosClientes.length+1;
             // console.log(newIdCliente);
             
             //Genero el nuevo cliente
@@ -226,17 +251,18 @@ async function guardarCampoNvo(){
                 "razonSocial": razonSocial,
                 "cuit": cuit
             };
-            crear("/cliente", nvoCliente); //FUNCIONA
+            crear("./cliente", nvoCliente, todosLosClientes); //FUNCIONA  le paso tambien el arreglo
+            // loadClientes();
             
             //Genero el nuevo campo
             nvoCampo = {
                 "nombre": nombre,
                 "ubicacion": ubicacion,
-                "cliente": nvoCliente
+                "cliente": nvoCliente,
+                "lotes": nvoLote
             };
-                
-            crear("campo/new-campo", nvoCampo); //FUNCIONA, DATOS NULL EN CLIENTE
-
+            crear("./campo/new-campo", nvoCampo, todosLosCampos); //FUNCIONA, DATOS NULL EN CLIENTE  le paso tmb el arreglo
+            loadCampos();
         }
         
         //Debería tambien crear el lote, pero no estoy pudiendo    
@@ -279,7 +305,7 @@ async function loadCampos() {
 };
 
 
-async function crear(url, objeto) {
+async function crear(url, objeto, arreglo) { //Agrege arreglo para guardar ahí el r
     let response = await fetch(url, {
         method: "POST",
         headers: {
@@ -289,14 +315,15 @@ async function crear(url, objeto) {
     })
     let r = await response.json();
     if (r.status !== "ok") {
-        console.log(`Ocurrio un error al crear ${url}, muestro status: ${r.status}`);
+        console.log(`Ocurrio un error al crear ${url}. Status: ${r.status}`);
     }
+    arreglo = r; //Actualizo el arreglo con r
 };
 //Funciona con algunos errores
 
 //######################################################################
 //NUEVO LOTE
-function guardarNvoLote(){
+async function guardarNvoLote(){
     let nombre = nvoLote.value;
     let has = hasNvoLote.value;
     let idCampo = dtlCampo.value;
@@ -309,11 +336,27 @@ function guardarNvoLote(){
         "hectareas": has,
         "idCampo": idCampo
     }
-    crear("lote/new-lote", newLote);
+    console.log(newLote);
+    // crear("lote/new-lote", newLote);
+    let response = await fetch("lote/new-lote", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newLote),
+    })
+    let r = await response.json();
+    //Por algún motivo siempre me larga que el status no es ok...
+    // if (r.status !== "ok") {
+    //     console.log(`Ocurrio un error al crear Lote. Status: ${r.status}`);
+    // }
+    allLotes = r; //Con esto actualizo el arreglo, debería chequear la funcion crear
 }
 
 //GENERANDO LA APLICACION
 function guardarDatosAplicacion() {
+    loadCampos();
+    loadClientes();
     //Capturo en variables los inputs
     let f = cmpFecha.value;
     let l = {}; //Chequear cómo armo este lote...
@@ -327,22 +370,34 @@ function guardarDatosAplicacion() {
 
     //Generar un if que me diga si el lote se obtiene desde el select
     //o si se trata de un nuevo lote
+    let lastLote = {};
 
-    if (lote == '') {
-        console.log("Mostrame esta!");
-        let loteName = nvoLote.value;
-        //Debería volver a hacer el load p q me traiga los datos nuevis
-        
+    if (lote == '') { //Si no hay datos en el select de lote:
+        console.log("Select vacio...");
+        console.log(allLotes);
+        let idNvoLote = allLotes.length;
+        console.log(idNvoLote);
+
+        //Busco el último lote creado, que esta en la ultima posicion del arreglo
         for (let i = 0; i < allLotes.length; i++) {
-            if (loteName == allLotes[i].nombre) {
+            // console.log("Entra al for...");
+            // console.log(idNvoLote);
+            // console.log(allLotes[i].idLote);
+
+            if (idNvoLote == allLotes[i].idLote) {
+                console.log("Entra en el if:");
+                console.log(idNvoLote);
+                console.log(allLotes[i].idLote);
+                //Ambos valores coinciden... Entonces, armo el lote
                 l = {
                     "idLote": allLotes[i].idLote,
                     "nombre": allLotes[i].nombre,
                     "hectareas": allLotes[i].hectareas,
                     "idCampo": allLotes[i].idCampo
-                }
+                } 
             }
-        } 
+        }
+
     } else {
         console.log("Hay datos en el dtl");
         let loteSelect = dtlLote.value;
@@ -358,33 +413,8 @@ function guardarDatosAplicacion() {
         };
     };
 
-    // if (lote != '') {
-    //     let loteSelect = dtlLote.value;
-    //     for (let i = 0; i < allLotes.length; i++) {
-    //         if (loteSelect == allLotes[i].idLote) {
-    //             l = {
-    //                 "idLote": allLotes[i].idLote,
-    //                 "nombre": allLotes[i].nombre,
-    //                 "hectareas": allLotes[i].hectareas,
-    //                 "idCampo": allLotes[i].idCampo
-    //             }; 
-    //         };
-    //     };   //HASTA ACÁ FUNCIONA
-    // } else if (lote == "<empty string>") { //Por algun motivo dtl siempre llega como cadena vacia...
-    //     console.log("Entra al else?");
-    //     let loteName = nvoLote.value;
-    //     console.log(loteName)
-    //     for (let i = 0; i < allLotes.length; i++) {
-    //         if (loteName == allLotes[i].nombre) {
-    //             l = {
-    //                 "idLote": allLotes[i].idLote,
-    //                 "nombre": allLotes[i].nombre,
-    //                 "hectareas": allLotes[i].hectareas,
-    //                 "idCampo": allLotes[i].idCampo
-    //             }
-    //         }
-    //     }  
-    // };
+    console.log("Muestro el lote creado:");
+    console.log(l);
 
     //Armo los objetos que quiero mandar como body
     let newAplicacion = {
@@ -394,17 +424,23 @@ function guardarDatosAplicacion() {
         "dosis": d 
     }   
 
-    crear("aplicacion/new-aplicacion", newAplicacion);
+    console.log("Muestro newAplicacion:");
+    console.log(newAplicacion);
+
+
+    crear("aplicacion/new-aplicacion", newAplicacion, allAplicacion); //Le paso el arreglo
 
 }
 
-//MANEJO DE PRODUCTOS?
-//Puedo crear un arreglo e ir metiendo ahí los datos?
-// let dimensionArreglo = document.getElementById("cantidadProd");
-// let productos = new Array (dimensionArreglo);
-// let dosis = new Array (dimensionArreglo);
-// //Cargo los datos en esos arreglos...
-// for (let i = 0; i < dimensionArreglo; i++) {
-//     productos[i] = input del producto
-//     dosis [i] = input dosis
-// }
+async function crearLote(unNvoLote){
+    let response = await fetch("lote/new-lote", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(unNvoLote),
+    })
+    let r = await response.json();
+    allLotes = r;
+    console.log(allLotes);
+};
