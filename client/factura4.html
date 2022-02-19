@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/style.css">
+  <a href="https://www.flaticon.es/iconos-gratis/compartimiento" title="compartimiento iconos"></a>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+
+  <title>Factura</title>
+</head>
+
+<body>
+  <div class="general">
+    <nav class="navbar navbar-left bg-left">
+      <div class="container-fluid justify-content-start">
+        <img src="./fotos/Green Nature Farmhouse Agriculture Farming Logo (Portada para Facebook) (Logos).png" alt=""
+          width="150" height="150">
+        <span class="titulo-nav-bar">FARMING</span>
+        <form class="enlaces">
+          <a class="nav-link" id="enlace" href="index.html">Inicio</a>
+          <a class="nav-link" id="enlace" href="nvo_trabajo2.html">Nuevo trabajo</a>
+          <a class="nav-link" id="enlace" href="consulta.html">Consultas</a>
+          <a class="nav-link" id="enlace" href="factura2.html">Facturacion</a>
+        </form>
+    </nav>
+
+    <body style="background-color: rgba(25, 71, 4, 0.514)">
+      <h1>
+        <center>Generar Factura</center>
+      </h1>
+
+      <form action="nombre">
+        <label for="nombre">
+          <span class="select-clientes">Nombre y Apellido o Razon social del produco</span>
+          <select id="cmpNombre">
+            <option value="" placeholder="nombre">nombre</option>
+          </select>
+
+          <span class="select-clientes">Campo</span>
+          <select id="cmpCampo" OnClick="loadLote();">
+            <option value="" placeholder="campos">campos</option>
+          </select>
+
+
+          <span class="select-clientes">Lote</span>
+          <select id="cmpLote">
+            <option value="" placeholder="lotes">lote</option>
+          </select>
+        </label>
+      </form>
+      <br>
+      <form action="periodo" id="periodos">
+        <label for="periodo">
+          <span class="select-clientes">Ingrese Periodo a Facturar: </span>
+          <br>
+          <span class="select-clientes">Desde: </span> <input type="date" id="periodo1"> <span
+            class="select-clientes">Hasta:</span> <input type="date" id="periodo2">
+        </label>
+      </form>
+      <input type="number" id="precioHecterea" placeholder="Precio Por hectarea">
+      <br>
+      <button type="submit" class="boton" target="_blank" id="btnBuscar">Buscar</button> <br>
+      <br>
+      <div class="contenido" id="tablaFactura">
+
+        <p>Detalle de Factura: </p>
+
+        <table style="width: 70%" class="table tbl-st6">
+
+          <thead>
+            <tr>
+              <th colspan="3">Descripcion</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Lote</th>
+            <th>Hta</th>
+            <th>Precio</th>
+          </tr>
+          <tbody id="tablaResultados"></tbody>
+
+          </tbody>
+          <tr>
+            <th colspan="3">Total</th>
+            <th id="total">$</th>
+          </tr>
+        </table>
+        <button type="reset" class="boton" id="btnNuevaFactura">Nueva Factura</button>
+      </div>
+      <br>
+      <div>
+        <footer>
+          <!-- Footer main -->
+          <section class="ft-main">
+            <div class="ft-main-item">
+
+              <h2 class="ft-title">Sobre</h2>
+              <ul>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Nosotros</a></li>
+
+            </div>
+
+            <div class="ft-main-item">
+              <h2 class="ft-title">Redes Sociales</h2>
+              <ul>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">eBooks</a></li>
+              </ul>
+            </div>
+
+            <div class="ft-main-item">
+              <h2 class="ft-title">Contacto</h2>
+              <ul>
+                <li><a href="#">Av.Pugol 243-Tandil</a></li>
+                <li><a href="#">Tel/Fax:(249)4438975 / Cel:(249)154859674</a></li>
+                <li><a href="#">E-mail:farmingLive@gmail.com</a></li>
+              </ul>
+            </div>
+
+          </section>
+
+
+
+          <!-- Footer legal -->
+          <section class="ft-legal">
+            <ul class="ft-legal-list">
+              <li><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li>&copy; 2019 Copyright Nowrap Inc.</li>
+            </ul>
+          </section>
+        </footer>
+      </div>
+
+
+
+      <script src="js/factura4.js"></script>
+  </div>
+  <footer>
+</body>
+
+</html>
