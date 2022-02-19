@@ -170,6 +170,7 @@ function mostrarClientes(entidad, datalist) {
 }
 
 //MEJORA: QUE MUESTRE EL CUIT EN CASO DE QUE SE SELECCIONES UN CLIENTE YA EXISTENTE.
+//O deshabilitar el input
 
 let todosLosClientes = [];
 loadClientes();
@@ -177,6 +178,7 @@ loadClientes();
 let todosLosCampos = [];
 loadCampos()
 
+//Esto no funca! Problemas en la creacion del Campo
 async function guardarCampoNvo(){ //Creo que falla el orden de los factores...
     try {
         let nombre = inpNvoCampo.value;
@@ -190,57 +192,65 @@ async function guardarCampoNvo(){ //Creo que falla el orden de los factores...
         let control = 0;
         let nvoCampo = {};
         let nvoCliente = {};
-        let nvoLote = [];
+        let nvoLote = {};
+        let oldCliente = {};
 
         nvoLote = {
                 "nombre": loteNvoCampo,
                 "hectareas": hasLoteNvoCampo,
                 "idCampo": todosLosCampos.length+1
-            };
+        };
         
-        console.log("nvoLote:");
-        console.log(nvoLote);
+        // console.log("nvoLote:");
+        // console.log(nvoLote);
 
         // crear("lote/new-lote", nvoLote, allLotes); //Le paso tambien el arreglo
         // loadLote();
         // console.log(allLotes); //No me toma el lote nuevo...
 
-        //Probando crear de otra manera...
-        crearLote(nvoLote);
-        //
 
         for (let i = 0; i < todosLosClientes.length; i++) {
             if (razonSocial == todosLosClientes[i].razonSocial) {
+                console.log("muestro el cliente encontrado...")
+                console.log(todosLosClientes[i]); //Hasta acá viene bien
+
                 control++
                 //Si la condicion se cumple, busca el cliente con ese nombre y extrae su id.
                 idCliente = todosLosClientes[i].idCliente;
                 //Llamaría al método crear campo, pasandole ese id.
-                nvoCampo = {
+
+                oldCliente = {
+                    "idCliente": idCliente,
+                    "razonSocial": todosLosClientes[i].razonSocial,
+                    "cuit": todosLosClientes[i].cuit
+                }
+
+                nvoCampo = { //Me guarda los clientes y lotes como null
                     "nombre": nombre,
                     "ubicacion": ubicacion,
-                    "cliente": {
-                        "idCliente": idCliente,
-                        "razonSocial": todosLosClientes[i].razonSocial,
-                        "cuit": todosLosClientes[i].cuit
-                    },
-                    "lotes": [
+                    "cliente": oldCliente,
+                    "lotes": nvoLote/*[
                         {
                         "nombre": loteNvoCampo,
                         "hectareas": hasLoteNvoCampo,
                         "idCampo": todosLosCampos.length+1   
                         }
-                    ]
+                    ]*/
                 }
                 
-                // console.log("El campo con el id ya existente: ");
-                // console.log(nvoCampo);
-                crear("/campo/new-campo", nvoCampo, todosLosCampos); //Le paso tambien el arreglo
-                // loadCampos();
+                console.log("El campo con el id ya existente: ");
+                console.log(nvoCampo);
+                crearCampo(nvoCampo); //A ver si funciona esto...
+                crear("campo/new-campo", nvoCampo); //Le paso tambien el arreglo?
+                loadCampos();
+                console.log("Muestro el nuevo campo del viejo cliente:");
+                console.log(todosLosCampos);
             }
         }
         
         //Si la variable control es 0, significa que no se encontró la razon social en la BD. 
         if (control == 0) {
+            loadLote();
             //Entonces el nuevo id será 1 más al ya existente (que coincide con el tamaño del arreglo, creo)
             idCliente = todosLosClientes.length+1;
             // console.log(newIdCliente);
@@ -251,8 +261,8 @@ async function guardarCampoNvo(){ //Creo que falla el orden de los factores...
                 "razonSocial": razonSocial,
                 "cuit": cuit
             };
-            crear("./cliente", nvoCliente, todosLosClientes); //FUNCIONA  le paso tambien el arreglo
-            // loadClientes();
+            crear("./cliente", nvoCliente); //FUNCIONA  le paso tambien el arreglo
+            loadClientes();
             
             //Genero el nuevo campo
             nvoCampo = {
@@ -261,8 +271,12 @@ async function guardarCampoNvo(){ //Creo que falla el orden de los factores...
                 "cliente": nvoCliente,
                 "lotes": nvoLote
             };
-            crear("./campo/new-campo", nvoCampo, todosLosCampos); //FUNCIONA, DATOS NULL EN CLIENTE  le paso tmb el arreglo
-            loadCampos();
+            crear("./campo/new-campo", nvoCampo); //FUNCIONA, DATOS NULL EN CLIENTE Y LOTES VACIO 
+                                                
+            //Genero el lote
+            crear("lote/new-lote", nvoLote); //Le paso tambien un arreglo?
+            loadLote();
+
         }
         
         //Debería tambien crear el lote, pero no estoy pudiendo    
@@ -305,7 +319,7 @@ async function loadCampos() {
 };
 
 
-async function crear(url, objeto, arreglo) { //Agrege arreglo para guardar ahí el r
+async function crear(url, objeto) { //Agregar arreglo para guardar ahí el r?
     let response = await fetch(url, {
         method: "POST",
         headers: {
@@ -317,7 +331,7 @@ async function crear(url, objeto, arreglo) { //Agrege arreglo para guardar ahí 
     if (r.status !== "ok") {
         console.log(`Ocurrio un error al crear ${url}. Status: ${r.status}`);
     }
-    arreglo = r; //Actualizo el arreglo con r
+    // arreglo = r; //Actualizo el arreglo con r
 };
 //Funciona con algunos errores
 
@@ -355,11 +369,13 @@ async function guardarNvoLote(){
 
 //GENERANDO LA APLICACION
 function guardarDatosAplicacion() {
+    loadLote();
     loadCampos();
     loadClientes();
     //Capturo en variables los inputs
     let f = cmpFecha.value;
     let l = {}; //Chequear cómo armo este lote...
+    let campo = dtlCampo.value;
     let lote = dtlLote.value;
     console.log(lote);
     console.log("Aca el dtlLote: ");
@@ -368,15 +384,35 @@ function guardarDatosAplicacion() {
     let d = cmpDosis.value;
     //Puedo modificar la entity para pasarle un arreglo de productos y dosis?
 
-    //Generar un if que me diga si el lote se obtiene desde el select
-    //o si se trata de un nuevo lote
-    let lastLote = {};
 
-    if (lote == '') { //Si no hay datos en el select de lote:
-        console.log("Select vacio...");
-        console.log(allLotes);
+    if (campo == '') { //En este caso, se trata de un nuevo campo. NO FUNCIONA, SE QUEDA CON LOS DATOS DEL LOTE ANTERIOR
+        console.log("Entra al if de nuevo campo");
+        loadLote();
+        console.log(allLotes); //Esto me trae datos desactualizados... No incorpora el ultimo lote
         let idNvoLote = allLotes.length;
-        console.log(idNvoLote);
+
+        //Busco el lote del nuevo campo, que está en la última posición del arreglo
+        for (let i = 0; i < idNvoLote; i++) {
+            
+            if (idNvoLote == allLotes[i].idLote) {
+                console.log("Entra en el if dentro del for del nuevo campo:");
+                console.log(idNvoLote);
+                console.log(allLotes[i].idLote);
+                //Ambos valores coinciden... Entonces, armo el lote
+                l = {
+                    "idLote": allLotes[i].idLote,
+                    "nombre": allLotes[i].nombre,
+                    "hectareas": allLotes[i].hectareas,
+                    "idCampo": allLotes[i].idCampo
+                } 
+            }
+        }
+    //Generar un if que me diga si el lote se obtiene desde el select o si se trata de un nuevo lote
+    } else if (campo != '' && lote == '') { //Si no hay datos en el select de lote:  -- FUNCIONA --
+        console.log("Select de lote vacio...");
+        // console.log(allLotes);
+        let idNvoLote = allLotes.length;
+        // console.log(idNvoLote);
 
         //Busco el último lote creado, que esta en la ultima posicion del arreglo
         for (let i = 0; i < allLotes.length; i++) {
@@ -398,7 +434,7 @@ function guardarDatosAplicacion() {
             }
         }
 
-    } else {
+    } else { //Cuando son datos de la BD  -- FUNCIONA --
         console.log("Hay datos en el dtl");
         let loteSelect = dtlLote.value;
         for (let i = 0; i < allLotes.length; i++) {
@@ -428,7 +464,7 @@ function guardarDatosAplicacion() {
     console.log(newAplicacion);
 
 
-    crear("aplicacion/new-aplicacion", newAplicacion, allAplicacion); //Le paso el arreglo
+    crear("aplicacion/new-aplicacion", newAplicacion); 
 
 }
 
@@ -443,4 +479,17 @@ async function crearLote(unNvoLote){
     let r = await response.json();
     allLotes = r;
     console.log(allLotes);
+};
+
+async function crearCampo(unNvoCampo){
+    let response = await fetch("campo/new-campo", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(unNvoCampo),
+    })
+    let r = await response.json();
+    todosLosCampos = r;
+    console.log(todosLosCampos);
 };
