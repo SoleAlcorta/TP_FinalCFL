@@ -9,6 +9,9 @@ th, td {
 
 /*barra de navegacion*/
 
+.facturaContenido{
+  padding-inline-start: 50% ;
+}
 
 .container-fluid{ 
   background-color:#dbece7af ;
