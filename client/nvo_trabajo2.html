@@ -40,21 +40,21 @@
         <!-- ######################################## -->
         <div id="nvoCampo" class="nvoElemento">
             <form>
-                Ingrese el nombre del Campo:
-                <input id="nvoEstablecimiento" type="text">
-            </form>
-            <form>
-                Ingrese la ubicacion del Campo:
-                <input id="ubicacionNvoCampo" type="text">
-            </form>
-            <form>
                 Ingrese nombre y apellido o razón social del cliente:
                 <input type="text" name="producto" id="slcCliente" list="listaClientes">
                 <datalist id="listaClientes">
                     <option value="">una opcion</option>
                 </datalist>
                 Ingrese el C.U.I.T. del cliente:
-                <input id="nvoCuit" type="number">
+                <input id="nvoCuit" class="" type="number">
+            </form>
+            <form>
+                Ingrese el nombre del Campo:
+                <input id="nvoEstablecimiento" type="text">
+            </form>
+            <form>
+                Ingrese la ubicacion del Campo:
+                <input id="ubicacionNvoCampo" type="text">
             </form>
             <form>
                 Ingrese el lote:
@@ -83,11 +83,11 @@
         <!-- ########################################### -->
 
         <!-- PRODUCTOS -->
-        <form>
+        <!-- <form>
             ¿Cuántos productos desea ingresar?
             <input type="number" id="cantidadProd">
-            <!-- Aca podría generar los input en base al numero ingresado... -->
-        </form>
+            Aca podría generar los input en base al numero ingresado...
+        </form> -->
         <form>
             Producto:
             <input type="text" id="prod">
