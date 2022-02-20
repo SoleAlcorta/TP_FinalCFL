@@ -75,6 +75,12 @@ load(allCampos, urlCampo, dtlCampo);
 loadLote();
 load(allClientes, urlCliente, dtlCliente);
 
+let todosLosClientes = [];
+loadClientes();
+
+let todosLosCampos = [];
+loadCampos();
+
 // load(allProductos, urlProd, dtlProductos);
 
 //Cargando datos... Y llenar los datalist.
@@ -172,14 +178,14 @@ function mostrarClientes(entidad, datalist) {
 //MEJORA: QUE MUESTRE EL CUIT EN CASO DE QUE SE SELECCIONES UN CLIENTE YA EXISTENTE.
 //O deshabilitar el input
 
-let todosLosClientes = [];
-loadClientes();
+// let todosLosClientes = [];
+// loadClientes();
 
-let todosLosCampos = [];
-loadCampos()
+// let todosLosCampos = [];
+// loadCampos()
 
-//Esto no funca! Problemas en la creacion del Campo
-async function guardarCampoNvo(){ //Creo que falla el orden de los factores...
+//FUNCIONA. Aunque sale null en cliente...
+async function guardarCampoNvo(){ 
     try {
         let nombre = inpNvoCampo.value;
         let ubicacion = inpNvaUbicacion.value;
@@ -195,22 +201,30 @@ async function guardarCampoNvo(){ //Creo que falla el orden de los factores...
         let nvoLote = {};
         let oldCliente = {};
 
+        let ultimo_idCampo;
+        let ultimo_idCliente;
+
+        // console.log(todosLosCampos);
+        let ultimoIndice = todosLosCampos.length;
+        // console.log("El ultimo indice del arreglo: "+ultimoIndice);
+        ultimo_idCampo = todosLosCampos[ultimoIndice-1].idCampo;
+        // console.log("El ultimo idCampo: "+ultimo_idCampo);
+      
+        // console.log(todosLosClientes); 
+        let ultimoIndiceCliente = todosLosClientes.length;
+        ultimo_idCliente = todosLosClientes[ultimoIndiceCliente-1].idCliente;
+        // console.log("El ultimo indice del arreglo de clientes: "+ultimoIndiceCliente);
+        // console.log("El ultimo idCliente: "+ultimo_idCliente);
+
+    
         nvoLote = {
                 "nombre": loteNvoCampo,
                 "hectareas": hasLoteNvoCampo,
-                "idCampo": todosLosCampos.length+1
+                "idCampo": ultimo_idCampo+1
         };
         
-        // console.log("nvoLote:");
-        // console.log(nvoLote);
-
-        // crear("lote/new-lote", nvoLote, allLotes); //Le paso tambien el arreglo
-        // loadLote();
-        // console.log(allLotes); //No me toma el lote nuevo...
-
-
-        for (let i = 0; i < todosLosClientes.length; i++) {
-            if (razonSocial == todosLosClientes[i].razonSocial) {
+        for (let i = 0; i < todosLosClientes.length; i++) { //Para buscar si el cliente cargado ya existe en la BD
+            if (razonSocial == todosLosClientes[i].razonSocial) { //FUNCIONA
                 console.log("muestro el cliente encontrado...")
                 console.log(todosLosClientes[i]); //Hasta acá viene bien
 
@@ -225,35 +239,34 @@ async function guardarCampoNvo(){ //Creo que falla el orden de los factores...
                     "cuit": todosLosClientes[i].cuit
                 }
 
-                nvoCampo = { //Me guarda los clientes y lotes como null
+                nvoCampo = { //Me guarda cliente como null.
                     "nombre": nombre,
                     "ubicacion": ubicacion,
-                    "cliente": oldCliente,
-                    "lotes": nvoLote/*[
-                        {
-                        "nombre": loteNvoCampo,
-                        "hectareas": hasLoteNvoCampo,
-                        "idCampo": todosLosCampos.length+1   
-                        }
-                    ]*/
+                    "cliente": /*oldCliente*/idCliente, //No hay caso...
+                    "lotes": nvoLote 
                 }
                 
                 console.log("El campo con el id ya existente: ");
                 console.log(nvoCampo);
-                crearCampo(nvoCampo); //A ver si funciona esto...
-                crear("campo/new-campo", nvoCampo); //Le paso tambien el arreglo?
+                todosLosCampos.push(nvoCampo);
+                // crearCampo(nvoCampo); //A ver si funciona esto...
+                crear("campo/new-campo", nvoCampo); 
                 loadCampos();
                 console.log("Muestro el nuevo campo del viejo cliente:");
                 console.log(todosLosCampos);
+
+                allLotes.push(nvoLote)
+                crear("lote/new-lote", nvoLote); //FUNCIONA
+                loadLote(); 
+    
             }
-        }
+        } 
         
         //Si la variable control es 0, significa que no se encontró la razon social en la BD. 
-        if (control == 0) {
-            loadLote();
+        if (control == 0) { //FUNCIONA. SOLO NULL EN CLIENTE
             //Entonces el nuevo id será 1 más al ya existente (que coincide con el tamaño del arreglo, creo)
-            idCliente = todosLosClientes.length+1;
-            // console.log(newIdCliente);
+            idCliente = ultimo_idCliente+1;
+            console.log("El id del nuevo cliente es: "+idCliente);
             
             //Genero el nuevo cliente
             nvoCliente = {
@@ -261,26 +274,33 @@ async function guardarCampoNvo(){ //Creo que falla el orden de los factores...
                 "razonSocial": razonSocial,
                 "cuit": cuit
             };
-            crear("./cliente", nvoCliente); //FUNCIONA  le paso tambien el arreglo
+
+            todosLosClientes.push(nvoCliente);
+            crear("cliente", nvoCliente);
+            console.log("Clientes actualizados?:");
+            console.log(todosLosClientes[todosLosClientes.length-1]);
             loadClientes();
-            
-            //Genero el nuevo campo
+        
+            //Genero el nuevo campo. NO TOMA EL VALOR DE CLIENTE... 
             nvoCampo = {
                 "nombre": nombre,
                 "ubicacion": ubicacion,
-                "cliente": nvoCliente,
+                "cliente": /*idCliente*/ nvoCliente, //No hay manera de acomodar esto!!
                 "lotes": nvoLote
             };
-            crear("./campo/new-campo", nvoCampo); //FUNCIONA, DATOS NULL EN CLIENTE Y LOTES VACIO 
+
+            todosLosCampos.push(nvoCampo)
+            crear("./campo/new-campo", nvoCampo); //FUNCIONA, DATOS NULL EN CLIENTE
+            loadCampos();
+            // console.log(nvoCampo);
                                                 
             //Genero el lote
-            crear("lote/new-lote", nvoLote); //Le paso tambien un arreglo?
-            loadLote();
+            allLotes.push(nvoLote)
+            crear("lote/new-lote", nvoLote); //FUNCIONA
+            loadLote(); 
 
         }
         
-        //Debería tambien crear el lote, pero no estoy pudiendo    
-
     } catch (error) {
         console.log("Ha ocurrido un error con el servidor")
     } 
@@ -292,11 +312,11 @@ async function loadClientes() {
             method: "GET",
             headers: {'Content-Type': 'application/json'}
         });
-        if (response.ok) {
+        // if (response.ok) {
             todosLosClientes = await response.json();
-        } else {
-            alert("Error en lectura del servidor")
-        }
+        // } else {
+        //     alert("Error en lectura del servidor")
+        // }
     } catch (error) {
         alert("Error en conexion con servidor");
     }
@@ -331,13 +351,15 @@ async function crear(url, objeto) { //Agregar arreglo para guardar ahí el r?
     if (r.status !== "ok") {
         console.log(`Ocurrio un error al crear ${url}. Status: ${r.status}`);
     }
-    // arreglo = r; //Actualizo el arreglo con r
+    console.log(`Console.log del crear de ${url}:`);
+    console.log(r);
+    getAll();
 };
 //Funciona con algunos errores
 
 //######################################################################
 //NUEVO LOTE
-async function guardarNvoLote(){
+async function guardarNvoLote(){ //FUNCIONA
     let nombre = nvoLote.value;
     let has = hasNvoLote.value;
     let idCampo = dtlCampo.value;
@@ -365,6 +387,7 @@ async function guardarNvoLote(){
     //     console.log(`Ocurrio un error al crear Lote. Status: ${r.status}`);
     // }
     allLotes = r; //Con esto actualizo el arreglo, debería chequear la funcion crear
+    loadLote();
 }
 
 //GENERANDO LA APLICACION
@@ -384,15 +407,22 @@ function guardarDatosAplicacion() {
     let d = cmpDosis.value;
     //Puedo modificar la entity para pasarle un arreglo de productos y dosis?
 
+    //Obtener el lote que cree con la funcion anterior:
+    console.log(allLotes);
+    let ultimoIndiceLote = allLotes.length;
+    let loteCreadoAntes = allLotes[ultimoIndiceLote-1];
+    console.log(loteCreadoAntes);
+    
+
 
     if (campo == '') { //En este caso, se trata de un nuevo campo. NO FUNCIONA, SE QUEDA CON LOS DATOS DEL LOTE ANTERIOR
         console.log("Entra al if de nuevo campo");
-        loadLote();
-        console.log(allLotes); //Esto me trae datos desactualizados... No incorpora el ultimo lote
+        // loadLote();
+        console.log(loteCreadoAntes); //Esto me trae datos desactualizados... No incorpora el ultimo lote
         let idNvoLote = allLotes.length;
 
         //Busco el lote del nuevo campo, que está en la última posición del arreglo
-        for (let i = 0; i < idNvoLote; i++) {
+        for (let i = 0; i < allLotes.length; i++) {
             
             if (idNvoLote == allLotes[i].idLote) {
                 console.log("Entra en el if dentro del for del nuevo campo:");
@@ -410,7 +440,7 @@ function guardarDatosAplicacion() {
     //Generar un if que me diga si el lote se obtiene desde el select o si se trata de un nuevo lote
     } else if (campo != '' && lote == '') { //Si no hay datos en el select de lote:  -- FUNCIONA --
         console.log("Select de lote vacio...");
-        // console.log(allLotes);
+        console.log(allLotes);
         let idNvoLote = allLotes.length;
         // console.log(idNvoLote);
 
@@ -493,3 +523,52 @@ async function crearCampo(unNvoCampo){
     todosLosCampos = r;
     console.log(todosLosCampos);
 };
+
+async function getAll() {
+    //Carga CAMPOS
+    try {
+        let responseCmp = await fetch('/campo', { 
+            method: "GET",
+               headers: {'Content-Type': 'application/json'}
+        });
+        // if (responseCmp.ok) {
+            todosLosCampos = await responseCmp.json();
+        // } else {
+        //     alert("Error en lectura del servidor")
+        // }
+    } catch (error) {
+        alert("Error en conexion con servidor");
+    }
+    
+    //Carga CLIENTES
+        try {
+            let responseCli = await fetch('/cliente', { 
+                method: "GET",
+                headers: {'Content-Type': 'application/json'}
+            });
+            // if (responseCli.ok) {
+                todosLosClientes = await responseCli.json();
+          
+            // } else {
+            //     alert("Error en lectura del servidor")
+            // }
+        } catch (error) {
+            alert("Error en conexion con servidor");
+        }
+  
+    //Carga LOTES
+        try {
+            let responseLot = await fetch('/lote', { 
+                method: "GET",
+                headers: {'Content-Type': 'application/json'}
+            });
+            // if (responseLot.ok) {
+                AllLotes = await responseLot.json();
+            // } else {
+            //     alert("Error en lectura del servidor")
+            // }
+        } catch (error) {
+            alert("Error en conexion con servidor");
+        }
+
+}
