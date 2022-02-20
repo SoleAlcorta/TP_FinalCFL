@@ -3,7 +3,7 @@
     "host": "localhost",
     "port": 3306,
     "username": "root",
-    "password":"37621721",
+    "password":"danni219852",
     "database": "tpfinal",
     "entities": [
       "dist/**/**.entity{.ts,.js}"
