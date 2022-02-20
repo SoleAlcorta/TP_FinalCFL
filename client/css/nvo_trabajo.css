@@ -1,4 +1,138 @@
+body {
+    background-color: rgba(25, 71, 4, 0.514);
+}
+
 .nvoElemento {
     display: none;
+}
+
+.contenedor {
+    margin: auto;
+}
+
+#tituloPcpal{
+    text-align: center;
+    font-style: italic;
+    font-size: 3rem;
+    /* font: italic bold monospace; */
+    color: white;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+#titulo2{
+    margin-left: 2rem;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+    text-decoration: underline 2px;
+}
+
+.form{
+    margin-left: 2rem;
+    font-size: 1.3rem;
+    color: white;
+    font-weight: bold;
+    margin-top: 1.3rem;
+    margin-bottom: 1.3rem;
+}
+
+.input{
+    font-size: 1.1rem;
+    background-color: rgb(188, 223, 188);
+    /* text-align: center; */
+    border-radius: 25px;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+}
+
+.select{
+    font-size: 1.1rem;
+    background-color: rgb(188, 223, 188);
+    text-align: center;
+    border-radius: 25px;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+}
+
+.boton{
+    margin-left: 2rem;
+    size: 50px;
+    background-color: white;
+       
+    font-weight: 600;
+    border-radius: 35%;
+    color: green;
+    font-size: 13px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 12px;
+    border-style: solid;
+    border-radius:25px;
+}
+
+.boton:hover{
+    background-color: green;
+   
+    color: white;
+    font-size: 13px;
+    padding: 12px;
+    border-width: 3px;
+    border-style: solid;
+    border-radius:30px;
+}
+
+.divNuevo{
+    background-color: rgb(188, 223, 188);
+    width: 80%;
+    margin: auto;
+    margin-top: 1rem;
+    padding-top: 0.2rem;
+}
+
+.nvoLote{
+    width: 60%;
+    margin: auto;
+    margin-top: 1rem;
+    padding-top: 0.2rem;
+}
+
+form.hijo{
+    font-size: 1.1rem;
+    color: rgb(71, 95, 71);
+}
+
+input.hijo{
+    font-size: 1rem;
+    background-color: rgb(188, 223, 188);
+    /* text-align: center; */
+    border-radius: 25px;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+}
+
+.has{
+    width: 6rem;
+    font-size: 1rem;
+    background-color: rgb(188, 223, 188);
+    /* text-align: center; */
+    border-radius: 25px;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+}
+
+.lote{
+    width: 10rem;
+    font-size: 1rem;
+    background-color: rgb(188, 223, 188);
+    /* text-align: center; */
+    border-radius: 25px;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+}
+
+.btnListo{
+    margin-left: 50%;
+    margin-right: 50%;
+    margin-bottom: 1rem;
 }
 
