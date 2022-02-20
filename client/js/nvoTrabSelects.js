@@ -178,12 +178,6 @@ function mostrarClientes(entidad, datalist) {
 //MEJORA: QUE MUESTRE EL CUIT EN CASO DE QUE SE SELECCIONES UN CLIENTE YA EXISTENTE.
 //O deshabilitar el input
 
-// let todosLosClientes = [];
-// loadClientes();
-
-// let todosLosCampos = [];
-// loadCampos()
-
 //FUNCIONA. Aunque sale null en cliente...
 async function guardarCampoNvo(){ 
     try {
@@ -338,6 +332,23 @@ async function loadCampos() {
     }
 };
 
+async function loadAplicaciones() {
+    try {
+        let response = await fetch('/aplicacion', { 
+            method: "GET",
+            headers: {'Content-Type': 'application/json'}
+        });
+        // if (response.ok) {
+            allAplicacion = await response.json();
+        // } else {
+        //     alert("Error en lectura del servidor")
+        // }
+    } catch (error) {
+        alert("Error en conexion con servidor");
+    }
+};
+
+
 
 async function crear(url, objeto) { //Agregar arreglo para guardar ahí el r?
     let response = await fetch(url, {
@@ -373,52 +384,37 @@ async function guardarNvoLote(){ //FUNCIONA
         "idCampo": idCampo
     }
     console.log(newLote);
-    // crear("lote/new-lote", newLote);
-    let response = await fetch("lote/new-lote", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newLote),
-    })
-    let r = await response.json();
-    //Por algún motivo siempre me larga que el status no es ok...
-    // if (r.status !== "ok") {
-    //     console.log(`Ocurrio un error al crear Lote. Status: ${r.status}`);
-    // }
-    allLotes = r; //Con esto actualizo el arreglo, debería chequear la funcion crear
+    allLotes.push(newLote);
+    crear("lote/new-lote", newLote);
     loadLote();
 }
 
 //GENERANDO LA APLICACION
 function guardarDatosAplicacion() {
-    loadLote();
-    loadCampos();
-    loadClientes();
+    getAll();
     //Capturo en variables los inputs
     let f = cmpFecha.value;
     let l = {}; //Chequear cómo armo este lote...
     let campo = dtlCampo.value;
     let lote = dtlLote.value;
-    console.log(lote);
-    console.log("Aca el dtlLote: ");
-    console.log(lote);
+    // console.log(lote);
+    // console.log("Aca el dtlLote: ");
+    // console.log(lote);
     let p = cmpProd.value;
     let d = cmpDosis.value;
     //Puedo modificar la entity para pasarle un arreglo de productos y dosis?
 
     //Obtener el lote que cree con la funcion anterior:
-    console.log(allLotes);
+    // console.log(allLotes);
     let ultimoIndiceLote = allLotes.length;
     let loteCreadoAntes = allLotes[ultimoIndiceLote-1];
-    console.log(loteCreadoAntes);
+    // console.log(loteCreadoAntes);
     
 
 
     if (campo == '') { //En este caso, se trata de un nuevo campo. NO FUNCIONA, SE QUEDA CON LOS DATOS DEL LOTE ANTERIOR
-        console.log("Entra al if de nuevo campo");
-        // loadLote();
-        console.log(loteCreadoAntes); //Esto me trae datos desactualizados... No incorpora el ultimo lote
+        // console.log("Entra al if de nuevo campo");
+        // console.log(loteCreadoAntes); 
         let idNvoLote = allLotes.length;
 
         //Busco el lote del nuevo campo, que está en la última posición del arreglo
@@ -493,7 +489,7 @@ function guardarDatosAplicacion() {
     console.log("Muestro newAplicacion:");
     console.log(newAplicacion);
 
-
+    allAplicacion.push(newAplicacion);
     crear("aplicacion/new-aplicacion", newAplicacion); 
 
 }
@@ -563,7 +559,22 @@ async function getAll() {
                 headers: {'Content-Type': 'application/json'}
             });
             // if (responseLot.ok) {
-                AllLotes = await responseLot.json();
+                allLotes = await responseLot.json();
+            // } else {
+            //     alert("Error en lectura del servidor")
+            // }
+        } catch (error) {
+            alert("Error en conexion con servidor");
+        }
+    
+        //Carga APLICACIONES
+        try {
+            let responseApli = await fetch('/aplicacion', { 
+                method: "GET",
+                headers: {'Content-Type': 'application/json'}
+            });
+            // if (responseLot.ok) {
+                allAplicacion = await responseApli.json();
             // } else {
             //     alert("Error en lectura del servidor")
             // }
