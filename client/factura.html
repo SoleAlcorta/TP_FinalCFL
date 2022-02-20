@@ -35,7 +35,7 @@
         <center>Generar Factura</center>
         <br>
       </h1>
-<div class="facturaContenido">
+<div class="divNombre">
       <form action="nombre">
         <label for="nombre">
           <span class="select-clientes">Nombre y Apellido o Razon social del produco</span>
@@ -55,7 +55,10 @@
           </select>
         </label>
       </form>
+    </div>
       <br>
+     
+     <div class="divFechas">
       <form action="periodo" id="periodos">
         <label for="periodo">
           <span class="select-clientes">Ingrese Periodo a Facturar: </span>
@@ -64,14 +67,18 @@
             class="select-clientes">Hasta:</span> <input type="date" id="periodo2">
         </label>
       </form>
-      <input type="number" id="precioHecterea" placeholder="Precio Por hectarea">
+    </div>
+<br>
+<div class="divPrecio">
+  <span>Ingrese precio por Hectarea:</span>
+    <input type="number" id="precioHecterea" placeholder="$">
       <br>
-      <button type="submit" class="boton" target="_blank" id="btnBuscar">Buscar</button> <br>
-      <br>
+</div>
+<button type="submit" class="boton" target="_blank" id="btnBuscar">Buscar</button>
+
       <div class="contenido" id="tablaFactura">
 
         <p>Detalle de Factura: </p>
-
         <table style="width: 70%" class="table tbl-st6">
 
           <thead>
@@ -96,7 +103,7 @@
         </table>
         <button type="reset" class="boton" id="btnNuevaFactura">Nueva Factura</button>
       </div>
-    </div>
+    
       <br>
       <div>
         <footer>
