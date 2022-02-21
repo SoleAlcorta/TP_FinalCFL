@@ -10,8 +10,8 @@ let lote = document.getElementById('cmpLote');
 
 
 loadClientes();
-//loadCampos();
-//loadLote();
+loadCampos();
+loadLote();
 loadAplicaciones();
 
 let productor = [];
@@ -157,6 +157,7 @@ function obtenerAplicaciones() {
         document.getElementById('periodos').style.display = "none";
         document.getElementById('precioHecterea').style.display = "none";
         document.getElementById('btnBuscar').style.display = "none";
+        document.getElementById('textoprecio').style.display = "none";
         document.getElementById("tablaFactura").style.visibility="visible";
 
 
@@ -202,7 +203,7 @@ function obtenerAplicaciones() {
     }
 
     function recargar(){
-        window.location.href = './factura4.html';
+        window.location.href = './factura.html';
     }
 
 
