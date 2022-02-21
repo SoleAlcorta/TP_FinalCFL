@@ -4,6 +4,7 @@
  font-weight: bold;
   display: flex;
   justify-content: center;
+  
 }
 
 .contenido{
@@ -25,7 +26,14 @@
   display: flex;
   justify-content: center;
 }
-
+.input{
+  font-size: 1.1rem;
+  background-color: rgb(188, 223, 188);
+  /* text-align: center; */
+  border-radius: 25px;
+  padding-left: 1.3rem;
+  padding-right: 1.3rem;
+}
 .inputsModif{
   display: flex;
   justify-content: center;
@@ -184,6 +192,20 @@ h1{
        }
   
 /*botones*/
+.boton-delete, .boton-update{
+  size: 25px;
+       background-color: white;
+       display: flex;
+       justify-content: center;
+       font-weight: 600;
+       border-radius: 35%;
+       color: green;
+       font-size: 13px;
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       padding: 12px;
+       border-style: solid;
+       border-radius:25px;
+}
 
        .boton{
         size: 50px;
