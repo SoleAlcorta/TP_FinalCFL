@@ -1,107 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/consultas.css">
+  <a href="https://www.flaticon.es/iconos-gratis/compartimiento" title="compartimiento iconos"></a>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+
     <title>Consultas</title>
+
 </head>
 <body>
-    <div class="general">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#"></a>
-              <!-- <img src="C:\Users\PC\Desktop\FRONT- FACTURA\imagenes\logo blanco.jpeg" alt="" width="150" height="150"> -->
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Consultas</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Facturas</a>
-                  </li>
-        
-                </ul>
-              </div>
-            </div>
-        </nav>
+  <div class="general"> 
+    <nav class="navbar navbar-left bg-left">
+      <div class="container-fluid justify-content-start">
+        <img src="Imagenes/logo.png" alt="" width="150" height="150">
+        <span class="navbar-text">FARMING</span>
+        <span class="mensaje"><sub>&nbsp; Creciendo juntos...</sub></span>
+        <form class="enlaces">
+          <a class="nav-link" id="enlace" href="index.html">Inicio</a>
+          <a class="nav-link" id="enlace" href="nvo_trabajo2.html">Nuevo trabajo</a>
+          <a class="nav-link" id="enlace" href="consulta.html">Consultas</a>
+          <a class="nav-link" id="enlace" href="factura2.html">Facturacion</a>
+      
+        </form>
+        </div>
+      </nav>
     </div>
+    <body style="background-color: rgba(25, 71, 4, 0.514)"></body>
 
-    <!--tabla-->
-    <h1><center>Consultas</center></h1><center>
+        <div class="consultar">
 
-        <form action="nombre">
-          <label for="nombre">
-              <span>Nombre y Apellido o Razon social del produco</span>
+          <center><h2>Consultas</h2><center>
+
+          <form action="nombre">
+            <label for="nombre">
+              <h3 class="nombreProductor">Seleccione los datos del cliente</h3>
+              <span class="select-clientes">Nombre o razon social</span>
               <select id="cmpIdentificacion" >
                 <option value="" placeholder="nombre">nombre</option>
               </select>
-              <span>Campo</span>
+              
+              <span class="select-clientes">Campo</span>
               <select id="cmpCampo">
                 <option value="" placeholder="campos">campos</option>
               </select>
 
               
-              <span>Lote</span>
+              <span class="select-clientes">Lote</span>
               <select id="cmpLote">
-                <option value="" placeholder="lotes" >lote</option>
+                <option value="" placeholder="lotes">lote</option>
                 
               </select>
-
-              <span> Fecha </span>
-              <input type="date" id="cmpFecha">
-
-
           </label>
         </form>
-      <br>
-    <button type="submit" target="_blank" id="btnBuscar">Buscar</button> <br>
-<br>
-<div class="contenido">
-    <table style="width: 50%">
-        <thead>
-          <th>Productor: </th>
-        </thead>
-      <tbody id="tablaResultados"> 
-        <tr>
-          <td id="campo">campo</td>
-          <td id="lote">lote</td>
-          <td id="hta">hta</td>
-          <td id="producto">producto</td>
-          <td id="dosis">dosis</td>
-        </tr>
-      </tbody>
-    </table>
-<br>
 
-<br>
-</div>
+          <br>
+          <button type="submit" class="boton" target="_blank" id="btnBuscar">Buscar</button> <br>
+      </div>
+          <br>
+          <div class="contenido">
+            <p class="detalles"> Detalles: <p>
+   
 
-<button  id="btnModificar">Modificar cliente</button>
+            <table style="width: 70%" class="table tbl-st6">
+              <thead>
+                <tr>
+                  <th>Hta</th>
+                  <th>Producto</th>
+                  <th>Dosis</th>
+                  <th>Fecha</th>
+                  <th></th>
 
-<button id="btnEliminar">Borrar cliente</button>
+                </tr>
+              </thead>
+              <tbody id="tablaResultados">
 
-<button type="reset" id="btnNuevaBusqueda">Nueva busqueda</button>
+              </tbody>
+            </table>
+            
 
-<script src="./js/consulta2.js"></script>
-</body>
-</html>
+          <center><div class="datosModificar"> Ingrese los datos a ser modificados</div></center>
+           <input type="text"  class="input" id="updProd" value="" placeholder="Producto">
+            <input type="text" class="input" id="updDosis" value="" placeholder="Dosis">
+            <input type="date" class="input" id="updFecha" value="" placeholder="Fecha">
+          </div>
+            <br>
+            <br>
+            <footer>
+              <footer>
+                <!-- Footer main -->
+                <section class="ft-main">
+                  <div class="ft-main-item">
+                    
+                    <h2 class="ft-title">Sobre</h2>
+                    <ul>
+                      <li><a href="#"><link rel="stylesheet" href="https://www.flaticon.com/premium-icon/customer-service_3631163?term=service&page=1&position=2&page=1&position=2&related_id=3631163&origin=search"><img src="Imagenes/customer-service.png" alt="" width="20" height="20"> Service</a></li>
+                      <li><a href="#"><link rel="stylesheet" href="https://www.flaticon.es/icono-premium/avatar_6219790?k=1645202432026"><img src="Imagenes/avatar.png" alt="" width="20" height="20"> Nosotros</a></li>
+                      
+                  </div>
+            
+                  <div class="ft-main-item">
+                    <h2 class="ft-title">Redes Sociales</h2>
+                    <ul>
+                      <li><a href="#"><link rel="stylesheet" href="https://www.flaticon.es/icono-premium/facebook_2504903?term=facebook&page=1&position=6&page=1&position=6&related_id=2504903&origin=tag"><img src="Imagenes/facebook.png" alt="" width="20" height="20"> Facebook</a></li>
+                      <li><a href="#"><link rel="stylesheet" href="https://www.flaticon.es/icono-gratis/instagram_174855?term=instagram&page=1&position=1&page=1&position=1&related_id=174855&origin=search"><img src="Imagenes/instagram.png" alt="" width="20" height="20"> Instagram</a></li>
+                    </ul>
+                  </div>
+            
+                  <div class="ft-main-item">
+                    <h2 class="ft-title">Contacto</h2>
+                    <ul>
+                      <li><a href="https://www.google.com.ar/maps/place/Av.+Pujol+243,+Tandil,+Provincia+de+Buenos+Aires/@-37.3009948,-59.1530782,17z/data=!3m1!4b1!4m5!3m4!1s0x959121cb3142caa3:0x93292af5bb53e5f!8m2!3d-37.3009948!4d-59.1508895"><link rel="stylesheet" href="https://www.flaticon.es/icono-gratis/mapa_854878?term=ubicacion&page=1&position=4&page=1&position=4&related_id=854878&origin=search"><img src="Imagenes/mapa.png" alt="" width="20" height="20"> Av.Pujol 243-Tandil</a></li>
+                      <li><link rel="icon" href="https://www.flaticon.es/icono-gratis/llamada_1033927?term=telefono%20fijo&page=1&position=3&page=1&position=3&related_id=1033927&origin=search"><img src="Imagenes/llamada.png" alt="" width="20" height="20"> (249)4438975</li>
+                      <li><link rel="stylesheet" href="https://www.flaticon.es/icono-premium/telefono-celular_4423898?term=celular&page=1&position=2&page=1&position=2&related_id=4423898&origin=search"><img src="Imagenes/telefono-celular.png" alt="" width="20" height="20"> (249)154859674</li>
+                      <li><a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox"><link rel="icon" href="https://www.flaticon.es/icono-gratis/email_3349258?related_id=3349258&origin=search"><img src="Imagenes/email.png" alt="" width="20" height="20"> farmingLive@gmail.com</a></li>
+                    </ul>
+                  </div>
+                  
+                </section>
+              
+               
+                
+                <!-- Footer legal -->
+                <section class="ft-legal">
+                  <ul class="ft-legal-list">
+                    <li><a href="#">Terms &amp; Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li>&copy; 2021 Copyright Nowrap Inc.</li>
+                  </ul>
+                </section>
+              </footer>
+             
+          
+             
+            
+             
+          </div>
+          <script src="./js/consulta2.js"></script>
+          <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+      </body>
 
-
+  </html>

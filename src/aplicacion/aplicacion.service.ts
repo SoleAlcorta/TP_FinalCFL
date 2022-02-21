@@ -59,31 +59,31 @@ export class AplicacionService {
     }
 
     //Actualizar
-    public async updAplicacion(id: number, aplicacionDTO: AplicacionDTO): Promise<string> {
-        const aplicacionCambia: Aplicacion = await this.aplicacionRepository.findOne(id);
+    public async updAplicacion(aplicationBody:any): Promise<boolean> {
+        const aplicacionCambia: Aplicacion = await this.aplicacionRepository.findOne(aplicationBody.idAplicacion);
         if (!aplicacionCambia){
             throw new HttpException('La aplicacion no existe', 404);
         } else {
-            aplicacionCambia.setFechaAplicacion(aplicacionDTO.fechaAplicacion);
-            aplicacionCambia.setProducto(aplicacionDTO.producto);
-            aplicacionCambia.setDosis(aplicacionDTO.dosis);
-            // aplicacionCambia.setLoteAplicacion(aplicacion.loteAplicacion);
-            // aplicacionCambia.setCampoAplicacion(aplicacion.campoAplicacion);
+            aplicacionCambia.setFechaAplicacion(aplicationBody.fecha);
+            aplicacionCambia.setProducto(aplicationBody.producto);
+            aplicacionCambia.setDosis(aplicationBody.dosis);
             await this.aplicacionRepository.save(aplicacionCambia);
-            return "Aplicacion modificada.";
+            return true;
         }
     }
 
     // Eliminar
-    public async delAplicacion(id: number) : Promise<Aplicacion[]> { 
+    public async delAplicacion(id: number) : Promise<boolean> { 
         try {
             const aplicacion: Aplicacion = await this.aplicacionRepository.findOne(id);
             if (!aplicacion) { 
                 throw new HttpException( { error : `Error buscando la aplicacion con Id: ${id}`}, HttpStatus.NOT_FOUND);
             } 
-            await this.aplicacionRepository.delete(id);
+            else{
+await this.aplicacionRepository.delete(id);
             const aplicaciones: Aplicacion[] = await this.aplicacionRepository.find() 
-            return aplicaciones;
+            return true;
+            }
         } catch (error) { 
             throw new HttpException( { error : `Error eliminando la aplicacion con Id: ${id}`}, HttpStatus.NOT_FOUND);
         }

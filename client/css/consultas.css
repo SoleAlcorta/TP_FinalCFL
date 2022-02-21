@@ -1,0 +1,337 @@
+/*estilo encabezado general*/
+.container-fluid{ /*BARRA DE NAVEGACION*/
+  background-color:#dbece7af ;
+  height: 150px;
+}
+
+#enlace{
+  
+  font-family: cursive;
+ text-decoration: none;
+ color: white;
+ float: right;
+
+}
+
+.enlaces{
+  font-size: 19px;
+  padding-left: 400px;
+}
+
+header nav div ul li a {
+color: white;
+font-weight: bold;
+text-decoration: none;
+font-size: 20px;
+float: right;
+
+ 
+}
+
+nav ul li a:hover{
+background-color:#eaeeed;
+
+}
+
+
+
+.nav-item {
+font-family:cursive;
+}
+
+
+.titulo-nav-bar{  /*farming*/
+  margin-left: 50px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  font-size: 50px;
+}
+
+.subtitulo{
+  color: white;
+  margin-left: 250px;
+  font-family: cursive;
+}
+
+.select-clientes { /*select para buscar datos en la tabla*/
+  color: white;
+  font-size: medium;
+ font-weight: bold;
+ }
+
+ h2{
+  color: white;
+  font-weight: bolder;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+     
+ }
+
+ 
+.nombreProductor{ /*seleccione los datos del cliente*/
+
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: white;
+}
+
+
+ p {
+     color: white;
+ }
+
+
+ select{ /*estilos de los select*/
+
+  font-size: 10px;
+      font-family: 'Arial', sans-serif;
+      font-weight: 100;
+      color: rgb(12, 2, 2);
+      
+      padding: .4em 1.4em .3em .8em;
+      width: 150px;
+      max-width: 100%; 
+     
+      margin: 0;
+      border: 1px solid #aaa;
+      box-shadow: 0 1px 0 1px rgba(167, 42, 42, 0.03);
+      border-radius: 25px;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: rgb(255, 255, 255);
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+        linear-gradient(to bottom, #ffffff 0%,#c5ddca 100%);
+      background-repeat: no-repeat, repeat;
+      background-position: right .7em top 50%, 0 0;
+      background-size: .65em auto, 100%;
+     }
+     .select-css::-ms-expand {
+      display: none;
+     }
+     .select-css:hover {
+      border-color:green;
+     }
+     .select-css:focus {
+      border-color: rgb(236, 230, 230);
+      box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+      box-shadow: 0 0 0 3px -moz-mac-focusring;
+      color: #222; 
+      outline: none;
+     }
+     .select-css option {
+      font-weight:normal;
+     }
+
+
+
+ /*estilo de tabla */
+ .tbl-st6{
+  margin:auto;
+  background-color: none;
+  border: none;
+  border-bottom: 2px solid #ffffff;
+  width: 90%;
+/*    table-layout: fixed;*/
+}
+.tbl-st6>thead{
+  display: block;
+  width: 100%;
+  color: #ffffff;
+  background-color: darkgray;
+}
+.tbl-st6>tbody{
+  display:block;
+  width: 100%;
+  height: 200px;
+  overflow: auto;
+}
+.tbl-st6>thead>tr{
+  display: flex;
+}
+.tbl-st6>tbody>tr{
+  display: flex;
+}
+.tbl-st6>thead>tr>th{
+  border: none;
+  border-bottom: 2px solid #ffffff;
+  display: flex;
+  padding: 6px 5px;
+  text-align: left;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+.tbl-st6>tbody>tr>td{
+  padding: 8px 15px;
+  border: 1px solid #ffffff;
+  padding: 5px 10px;;
+  text-align: left;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+.tbl-st6>tbody>tr:nth-child(2n+1){
+  color: #000000;
+  background-color: lightgray; 
+}
+.tbl-st6>tbody>tr:hover{
+  cursor: pointer;
+  background-color:rgba(17, 85, 17, 0.452);
+}
+
+
+/*botones*/
+     .boton{
+         size: 50px;
+        background-color: white;
+        
+        font-weight: 600;
+        border-radius: 35%;
+        color: green;
+        font-size: 13px;
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        padding: 12px;
+        border-style: solid;
+        border-radius:25px;
+     } 
+     .boton:hover{
+         background-color: green;
+        
+        color: white;
+        font-size: 13px;
+        padding: 12px;
+        border-width: 3px;
+        border-style: solid;
+        border-radius:30px;
+     }
+     
+     .boton-update {
+       
+     }
+      /*pie de pagina*/
+     
+     /* estilo general */
+* {
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.datosModificar{
+  color: #eee;
+  font-size: 20px;
+  font-weight: bold;
+}
+.detalles{
+  color: #eee;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.input{
+  margin-left: 180px;
+}
+
+footer {
+  background-color: #555;
+  color: #bbb;
+  line-height: 1.5;
+}
+footer a {
+  text-decoration: none;
+  color: #eee;
+}
+a:hover {
+  text-decoration: underline;
+}
+.ft-title {
+  color: #fff;
+  font-family: "Merriweather", serif;
+  font-size: 1.375rem;
+  padding-bottom: 0.625rem;
+}
+/* Sticks footer to bottom */
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.container {
+  flex: 1;
+}
+/* Footer main */
+.ft-main {
+  padding: 1.25rem 1.875rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+@media only screen and (min-width: 29.8125rem /* 477px */) {
+  .ft-main {
+    justify-content: space-evenly;
+  }
+}
+@media only screen and (min-width: 77.5rem /* 1240px */) {
+  .ft-main {
+    justify-content: space-evenly;
+  }
+}
+.ft-main-item {
+  padding: 1.25rem;
+  min-width: 12.5rem;
+}
+
+/* Footer main | Newsletter form */
+form {
+  display: flex;
+  flex-wrap: wrap;
+}
+input[type="email"] {
+  border: 0;
+  padding: 0.625rem;
+  margin-top: 0.3125rem;
+}
+input[type="submit"] {
+  background-color: #00d188;
+  color: #fff;
+  cursor: pointer;
+  border: 0;
+  padding: 0.625rem 0.9375rem;
+  margin-top: 0.3125rem;
+}
+/* Footer social */
+.ft-social {
+  padding: 0 1.875rem 1.25rem;
+}
+.ft-social-list {
+  display: flex;
+  justify-content: center;
+  border-top: 1px #777 solid;
+  padding-top: 1.25rem;
+}
+.ft-social-list li {
+  margin: 0.5rem;
+  font-size: 1.25rem;
+}
+/* Footer legal */
+.ft-legal {
+  padding: 0.9375rem 1.875rem;
+  background-color: #333;
+}
+.ft-legal-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.ft-legal-list li {
+  margin: 0.125rem 0.625rem;
+  white-space: nowrap;
+}
+/* one before the last child */
+.ft-legal-list li:nth-last-child(2) {
+    flex: 1;
+}
+     
+     
+    
