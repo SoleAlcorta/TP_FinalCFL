@@ -25,12 +25,14 @@ export class AplicacionController {
     create(@Body() consultas: any): Promise<Aplicacion[]> {
         return this.aplicacionService.addAplicacion(consultas);
     }
-    @Put(':id')
-    public async updAplicacion(@Param('id') id:number,@Body() aplicacionDTO: AplicacionDTO): Promise<string> {
-     return this.aplicacionService.updAplicacion(id,aplicacionDTO);
+    
+    @Put(':index')
+    public async updAplicacion(@Body() aplicacionBody:any): Promise<boolean> {
+     return this.aplicacionService.updAplicacion(aplicacionBody);
     }
+
     @Delete(':id')  
-    public delAplicacion(@Param('id') id: string): Promise<Aplicacion[]> {
+    public delAplicacion(@Param('id') id): Promise<boolean> {
         return this.aplicacionService.delAplicacion(parseInt(id));
     }
 }
