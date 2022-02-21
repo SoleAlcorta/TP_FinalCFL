@@ -23,14 +23,15 @@
               </form>
           </nav>
 
-        <p id="tituloPcpal">Nuevo Trabajo</h2>
+        <center><h1>Nuevo Trabajo</h1></center>
         <p id="titulo2">Complete los siguientes datos:</p>
         <!-- FECHA -->
+      
         <form class="form">
             Fecha:
             <input type="date" name="fecha" id="fecha" class="input">
         </form>
-        
+        <br>
         <!-- ESTABLECIMIENTO -->
         <form class="form">
             Establecimiento:
@@ -39,19 +40,20 @@
             </select>
             Lote:
             <select id="listaLotes" class="select">
-                <option value="">una opcion</option>
+                <option value="">Lotes</option>
             </select>
             <span id="ver has"></span>
             <!-- una vez seleccionado el lote, quiero que me muestre las hectareas. -->
         </form>
         <!-- Ambos select podrían incluir la opción OTRO, para ingresar nuevos datos. -->
-        
         <div id="respuesta"></div>
         <!-- En este div quiero mostrar los datos del productor -->
-
+        <br>
+        <div class="botonesNuevo">
         <button id="btnAddCampo" class="boton">Nuevo Campo</button>
         <button id="btnNvoLote" class="boton">Nuevo Lote</button>
-
+        </div>
+        <br>
         <!-- ######################################## -->
         <div id="nvoCampo" class="nvoElemento divNuevo">
             <form class="form hijo">
@@ -141,8 +143,10 @@
         <!-- Ingresar otro lote -->
         <!-- <div id="otro lote"></div>
         <button class="btnAddLote">Agregar otro lote</button> -->
-
+        <br>
+        <div class="botonFinal">
         <button id="btnFinish" class="boton">Listo</button>
+      </div>
 
     </div>
 

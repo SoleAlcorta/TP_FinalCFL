@@ -10,8 +10,8 @@ let lote = document.getElementById('cmpLote');
 
 
 loadClientes();
-loadCampos();
-loadLote();
+// loadCampos();
+// loadLote();
 loadAplicaciones();
 
 let productor = [];
