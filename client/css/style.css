@@ -259,6 +259,16 @@ form {
   display: flex;
   flex-wrap: wrap;
 }
+
+.input{
+  font-size: 1.1rem;
+  background-color: rgb(188, 223, 188);
+  /* text-align: center; */
+  border-radius: 25px;
+  padding-left: 1.3rem;
+  padding-right: 1.3rem;
+}
+
 input[type="email"] {
   border: 0;
   padding: 0.625rem;
