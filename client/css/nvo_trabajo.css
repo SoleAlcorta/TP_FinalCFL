@@ -1,4 +1,6 @@
+/* OJO. NO MODIFICAR MUCHO HASTA LA LÍNEA 141*/
 body {
+    /* background-color: rgba(25, 71, 4, 0.514); */
     background-color: rgba(25, 71, 4, 0.514);
 }
 
@@ -135,4 +137,64 @@ input.hijo{
     margin-right: 50%;
     margin-bottom: 1rem;
 }
+
+/* Nav Bar  */
+
+.container-fluid{ 
+    background-color:#dbece7af ;
+    height: 150px;
+}
+
+#enlace{
+    font-family: cursive;
+    text-decoration: none;
+    color: white;
+    float: right;
+}
+
+.enlaces{
+    font-size: 19px;
+    padding-left: 400px;
+}
+
+header nav div ul li a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 20px;
+    float: right;
+}
+
+nav ul li a:hover{
+    background-color:#eaeeed;
+}
+
+.nav-item {
+    font-family:cursive;
+}
+
+.titulo-nav-bar{  
+    margin-left: 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    font-size: 50px;
+  }
+
+* {
+    box-sizing: border-box;
+    font-family: "Lato", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+
+
+
+
+
 
